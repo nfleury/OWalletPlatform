@@ -45,6 +45,7 @@ public class RechargeController {
 
         UserCoinBalance userCoinBalance = rechargeService.initUserCoinWallet(1,"prikey","addresss","OCN");
         responseValue.setData(userCoinBalance);
+        System.out.println("1111");
         return responseValue;
     }
 
