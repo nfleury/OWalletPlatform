@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.coinwallet.rechage.dao.UserCoinBalanceMapper" >
+  <resultMap id="BaseResultMap" type="com.coinwallet.rechage.entity.UserCoinBalance" >
+    <id column="userid" property="userid" jdbcType="INTEGER" />
+    <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
+    <result column="coin_name" property="coinName" jdbcType="VARCHAR" />
+    <result column="coin_address" property="coinAddress" jdbcType="VARCHAR" />
+    <result column="privatekey" property="privatekey" jdbcType="VARCHAR" />
+    <result column="coin_balance" property="coinBalance" jdbcType="DECIMAL" />
+    <result column="show_balance" property="showBalance" jdbcType="DECIMAL" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    userid, merchant_id, coin_name, coin_address, privatekey, coin_balance, show_balance
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.coinwallet.rechage.entity.UserCoinBalanceExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    'false' as QUERYID,
+    <include refid="Base_Column_List" />
+    from user_coin_balance
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_coin_balance
+    where userid = #{userid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_coin_balance
+    where userid = #{userid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.coinwallet.ocn.entity.UserCoinBalance" >
+    insert into user_coin_balance (userid, merchant_id, coin_name, 
+      coin_address, privatekey, coin_balance, 
+      show_balance)
+    values (#{userid,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{coinName,jdbcType=VARCHAR}, 
+      #{coinAddress,jdbcType=VARCHAR}, #{privatekey,jdbcType=VARCHAR}, #{coinBalance,jdbcType=DECIMAL}, 
+      #{showBalance,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.coinwallet.rechage.entity.UserCoinBalance" >
+    insert into user_coin_balance
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        userid,
+      </if>
+      <if test="merchantId != null" >
+        merchant_id,
+      </if>
+      <if test="coinName != null" >
+        coin_name,
+      </if>
+      <if test="coinAddress != null" >
+        coin_address,
+      </if>
+      <if test="privatekey != null" >
+        privatekey,
+      </if>
+      <if test="coinBalance != null" >
+        coin_balance,
+      </if>
+      <if test="showBalance != null" >
+        show_balance,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="merchantId != null" >
+        #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="coinName != null" >
+        #{coinName,jdbcType=VARCHAR},
+      </if>
+      <if test="coinAddress != null" >
+        #{coinAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="privatekey != null" >
+        #{privatekey,jdbcType=VARCHAR},
+      </if>
+      <if test="coinBalance != null" >
+        #{coinBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="showBalance != null" >
+        #{showBalance,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_coin_balance
+    <set >
+      <if test="record.userid != null" >
+        userid = #{record.userid,jdbcType=INTEGER},
+      </if>
+      <if test="record.merchantId != null" >
+        merchant_id = #{record.merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="record.coinName != null" >
+        coin_name = #{record.coinName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coinAddress != null" >
+        coin_address = #{record.coinAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.privatekey != null" >
+        privatekey = #{record.privatekey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.coinBalance != null" >
+        coin_balance = #{record.coinBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="record.showBalance != null" >
+        show_balance = #{record.showBalance,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_coin_balance
+    set userid = #{record.userid,jdbcType=INTEGER},
+      merchant_id = #{record.merchantId,jdbcType=INTEGER},
+      coin_name = #{record.coinName,jdbcType=VARCHAR},
+      coin_address = #{record.coinAddress,jdbcType=VARCHAR},
+      privatekey = #{record.privatekey,jdbcType=VARCHAR},
+      coin_balance = #{record.coinBalance,jdbcType=DECIMAL},
+      show_balance = #{record.showBalance,jdbcType=DECIMAL}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.coinwallet.rechage.entity.UserCoinBalance" >
+    update user_coin_balance
+    <set >
+      <if test="merchantId != null" >
+        merchant_id = #{merchantId,jdbcType=INTEGER},
+      </if>
+      <if test="coinName != null" >
+        coin_name = #{coinName,jdbcType=VARCHAR},
+      </if>
+      <if test="coinAddress != null" >
+        coin_address = #{coinAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="privatekey != null" >
+        privatekey = #{privatekey,jdbcType=VARCHAR},
+      </if>
+      <if test="coinBalance != null" >
+        coin_balance = #{coinBalance,jdbcType=DECIMAL},
+      </if>
+      <if test="showBalance != null" >
+        show_balance = #{showBalance,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.coinwallet.rechage.entity.UserCoinBalance" >
+    update user_coin_balance
+    set merchant_id = #{merchantId,jdbcType=INTEGER},
+      coin_name = #{coinName,jdbcType=VARCHAR},
+      coin_address = #{coinAddress,jdbcType=VARCHAR},
+      privatekey = #{privatekey,jdbcType=VARCHAR},
+      coin_balance = #{coinBalance,jdbcType=DECIMAL},
+      show_balance = #{showBalance,jdbcType=DECIMAL}
+    where userid = #{userid,jdbcType=INTEGER}
+  </update>
+</mapper>
