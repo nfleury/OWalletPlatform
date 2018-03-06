@@ -96,7 +96,7 @@
     delete from user_coin_balance
     where userid = #{userid,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.coinwallet.ocn.entity.UserCoinBalance" >
+  <insert id="insert" parameterType="com.coinwallet.rechage.entity.UserCoinBalance" >
     insert into user_coin_balance (userid, merchant_id, coin_name, 
       coin_address, privatekey, coin_balance, 
       show_balance)
