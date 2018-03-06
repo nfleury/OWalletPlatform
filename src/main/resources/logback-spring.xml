@@ -46,7 +46,7 @@
     </appender>
 
     <springProfile name="default">
-        <root level="ERROR">
+        <root level="info">
             <appender-ref ref="stdout"/>
         </root>
     </springProfile>
