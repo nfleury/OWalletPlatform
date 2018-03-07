@@ -211,7 +211,7 @@ public class TransactionsResponse {
         //custom info about contract amount
         public String getTransactionAmount() {
             if (input == null || "".equals(input)) return null;
-            return CommonUtils.getAmount(input);
+            return CommonUtils.getSTAmount(input);
         }
 
 
