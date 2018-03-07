@@ -62,4 +62,7 @@ public class OWalletUtils {
         return ECKeyPair.create(resultBig);
     }
 
+
+
+
 }

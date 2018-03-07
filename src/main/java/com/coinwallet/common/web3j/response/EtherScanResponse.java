@@ -1,4 +1,4 @@
-package com.coinwallet.common.web3j.bean;
+package com.coinwallet.common.web3j.response;
 
 public class EtherScanResponse {
     public String jsonrpc;

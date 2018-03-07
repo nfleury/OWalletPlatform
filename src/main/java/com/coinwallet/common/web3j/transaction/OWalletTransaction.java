@@ -2,7 +2,8 @@ package com.coinwallet.common.web3j.transaction;
 
 import com.alibaba.fastjson.JSON;
 import com.coinwallet.common.web3j.api.EtherScanApi;
-import com.coinwallet.common.web3j.bean.EtherScanResponse;
+import com.coinwallet.common.web3j.response.EtherScanResponse;
+import com.coinwallet.common.web3j.response.TransactionsResponse;
 import com.coinwallet.common.web3j.utils.RawTransactionUtils;
 import com.coinwallet.common.web3j.utils.RequestUtils;
 import org.bouncycastle.util.encoders.Hex;
@@ -52,7 +53,7 @@ public class OWalletTransaction {
      * @param walletAddress
      * @param contractAddress
      */
-    public static String balanceOfContractToken(String walletAddress, String contractAddress)  {
+    public static String balanceOfContractToken(String walletAddress, String contractAddress) {
         Function function = new Function("balanceOf",
                 Arrays.<Type>asList(new Address(walletAddress)),
                 Arrays.<TypeReference<?>>asList(new TypeReference<Uint256>() {
@@ -116,7 +117,6 @@ public class OWalletTransaction {
     }
 
 
-
     /**
      * @param ecKeyPair
      * @param OCNAmount
@@ -166,5 +166,25 @@ public class OWalletTransaction {
         System.out.println("TransactionReceipt:" + responseResult);
     }
 
+
+    /**
+     *
+     * @param address
+     * @param startBlockNumber
+     * @param endBlockNumber   eg:99999999
+     * @return
+     */
+    public static List<TransactionsResponse.Result> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
+        String url = transactions_by_address(address, startBlockNumber, endBlockNumber);
+        System.out.println("url"+url);
+
+        String responseResult = RequestUtils.sendGet(url);
+        responseResult = responseResult.replace("/n", "");
+        System.out.println("responseResult"+responseResult);
+        TransactionsResponse transactionResponse = JSON.parseObject(responseResult, new com.alibaba.fastjson.TypeReference<TransactionsResponse>() {
+        });
+        return transactionResponse.getResult();
+
+    }
 
 }

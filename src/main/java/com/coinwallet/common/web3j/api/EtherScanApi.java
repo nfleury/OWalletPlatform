@@ -11,11 +11,8 @@ public class EtherScanApi {
 
 
     /**
-     *
-     *
      * @param ROPSTEN_API
      * @param ROPSTEN_CHAIN_ID
-     *
      * @param ROPSTEN_API
      * @param MAIN_CHAIN_ID
      */
@@ -35,8 +32,6 @@ public class EtherScanApi {
      */
 
     /**
-     *
-     *
      * @param address
      * @return
      */
@@ -82,6 +77,20 @@ public class EtherScanApi {
 
         return Url + "module=proxy&action=eth_call&to=" + to + "&data=" + data + "&tag=latest&apikey=" + APIKey.EtherScan_API_KEY;
 
+    }
+
+
+    /**
+     * get transactions list about contractAddress
+     *
+     * @param address
+     * @param startBlockNumber
+     * @param endBlockNumber
+     * @return
+     */
+    public static String transactions_by_address(String address, String startBlockNumber, String endBlockNumber) {
+        return Url + "module=account&action=txlist&address=" + address + "&startblock=" + startBlockNumber + "&endblock=" + endBlockNumber + "&sort=asc&apikey=" + APIKey.EtherScan_API_KEY;
 
     }
+
 }

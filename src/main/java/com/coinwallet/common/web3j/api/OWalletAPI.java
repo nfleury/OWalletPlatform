@@ -1,6 +1,7 @@
 package com.coinwallet.common.web3j.api;
 
 import com.coinwallet.common.web3j.bean.WalletInfo;
+import com.coinwallet.common.web3j.response.TransactionsResponse;
 import com.coinwallet.common.web3j.transaction.OWalletTransaction;
 import com.coinwallet.common.web3j.utils.OWalletUtils;
 import org.web3j.crypto.ECKeyPair;
@@ -9,6 +10,7 @@ import java.io.IOException;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
+import java.util.List;
 
 /**
  * Created by y on 2018/3/5.
@@ -16,7 +18,7 @@ import java.security.NoSuchProviderException;
 public class OWalletAPI {
 
 
-    public static  WalletInfo generateWallet() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
+    public static WalletInfo generateWallet() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
         return OWalletUtils.generateWallet();
     }
 
@@ -52,7 +54,7 @@ public class OWalletAPI {
      * @throws IOException
      * @throws InterruptedException
      */
-    public static  String transactionEth(ECKeyPair ecKeyPair, String ethAmount, String toAddress, String gas_price, String gas_limit, String data) throws IOException, InterruptedException {
+    public static String transactionEth(ECKeyPair ecKeyPair, String ethAmount, String toAddress, String gas_price, String gas_limit, String data) throws IOException, InterruptedException {
         return OWalletTransaction.transactionEth(ecKeyPair, ethAmount, toAddress, gas_price, gas_limit, data);
     }
 
@@ -70,8 +72,19 @@ public class OWalletAPI {
      * @throws InterruptedException
      */
 
-    public static  String transactionOnContract(ECKeyPair ecKeyPair, String tokenAmount, String toAddress, String gas_price, String gas_limit, String data, String ERC20Address) throws IOException, InterruptedException {
+    public static String transactionOnContract(ECKeyPair ecKeyPair, String tokenAmount, String toAddress, String gas_price, String gas_limit, String data, String ERC20Address) throws IOException, InterruptedException {
         return OWalletTransaction.transactionOnContract(ecKeyPair, tokenAmount, toAddress, gas_price, gas_limit, data, ERC20Address);
+    }
+
+    /**
+     *
+     * @param address
+     * @param startBlockNumber
+     * @param endBlockNumber
+     * @return
+     */
+    public static List<TransactionsResponse.Result> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
+        return OWalletTransaction.getTransactionList(address, startBlockNumber, endBlockNumber);
     }
 
 
