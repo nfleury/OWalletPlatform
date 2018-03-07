@@ -2,7 +2,7 @@ package com.coinwallet.rechage.entity;
 
 import java.math.BigDecimal;
 
-public class userCoinLog {
+public class UserCoinLog {
     private Integer id;
 
     private Integer merchantId;

@@ -10,6 +10,7 @@
     <result column="coin_balance" property="coinBalance" jdbcType="DECIMAL" />
     <result column="show_balance" property="showBalance" jdbcType="DECIMAL" />
   </resultMap>
+
   <sql id="Example_Where_Clause" >
     <where >
       <foreach collection="oredCriteria" item="criteria" separator="or" >
@@ -85,6 +86,16 @@
     <if test="orderByClause != null" >
       order by ${orderByClause}
     </if>
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from user_coin_balance
+  </select>
+  <select id="selectUserAddress" resultType="string">
+    select
+    coin_address
+    from user_coin_balance
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 

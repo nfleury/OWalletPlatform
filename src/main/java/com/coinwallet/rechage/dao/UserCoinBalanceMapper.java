@@ -24,4 +24,8 @@ public interface UserCoinBalanceMapper {
     int updateByPrimaryKeySelective(UserCoinBalance record);
 
     int updateByPrimaryKey(UserCoinBalance record);
+
+    List<String> selectUserAddress();
+
+    List<UserCoinBalance> selectAll();
 }

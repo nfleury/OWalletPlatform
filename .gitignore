@@ -1,6 +1,7 @@
 # Compiled class file
 *.class
 application-prod.yml
+application.properties
 
 # Log file
 *.log

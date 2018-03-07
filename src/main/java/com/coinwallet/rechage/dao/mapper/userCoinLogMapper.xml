@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.coinwallet.rechage.dao.userCoinLogMapper" >
-  <resultMap id="BaseResultMap" type="com.coinwallet.rechage.entity.userCoinLog" >
+<mapper namespace="com.coinwallet.rechage.dao.UserCoinLogMapper" >
+  <resultMap id="BaseResultMap" type="com.coinwallet.rechage.entity.UserCoinLog" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="merchant_id" property="merchantId" jdbcType="INTEGER" />
     <result column="userid" property="userid" jdbcType="INTEGER" />
@@ -69,7 +69,7 @@
   <sql id="Base_Column_List" >
     id, merchant_id, userid, change_type, change_num
   </sql>
-  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.coinwallet.rechage.entity.userCoinLogExample" >
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.coinwallet.rechage.entity.UserCoinLogExample" >
     select
     <if test="distinct" >
       distinct
@@ -94,13 +94,13 @@
     delete from user_coin_log
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.coinwallet.rechage.entity.userCoinLog" >
+  <insert id="insert" parameterType="com.coinwallet.rechage.entity.UserCoinLog" >
     insert into user_coin_log (id, merchant_id, userid, 
       change_type, change_num)
     values (#{id,jdbcType=INTEGER}, #{merchantId,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER}, 
       #{changeType,jdbcType=INTEGER}, #{changeNum,jdbcType=DECIMAL})
   </insert>
-  <insert id="insertSelective" parameterType="com.coinwallet.rechage.entity.userCoinLog" >
+  <insert id="insertSelective" parameterType="com.coinwallet.rechage.entity.UserCoinLog" >
     insert into user_coin_log
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -171,7 +171,7 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="com.coinwallet.rechage.entity.userCoinLog" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.coinwallet.rechage.entity.UserCoinLog" >
     update user_coin_log
     <set >
       <if test="merchantId != null" >
@@ -189,7 +189,7 @@
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.coinwallet.rechage.entity.userCoinLog" >
+  <update id="updateByPrimaryKey" parameterType="com.coinwallet.rechage.entity.UserCoinLog" >
     update user_coin_log
     set merchant_id = #{merchantId,jdbcType=INTEGER},
       userid = #{userid,jdbcType=INTEGER},

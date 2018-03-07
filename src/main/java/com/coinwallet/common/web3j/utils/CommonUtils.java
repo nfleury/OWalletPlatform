@@ -50,7 +50,7 @@ public class CommonUtils {
         if (transactionList.size() > 0) {
             for (TransactionsResponse.Result result : transactionList) {
 
-                String transactionAmount = result.getTransactionAmount();
+                BigDecimal transactionAmount = result.getTransactionAmount();
                 String walletAddress = result.getTransactionTo();
                 System.out.println(transactionAmount + "__" + walletAddress);
 
@@ -59,14 +59,14 @@ public class CommonUtils {
     }
 
 
-    public static String getSTAmount(String input) {
+    public static BigDecimal getSTAmount(String input) {
         if (input.startsWith("0x")) {
             input = input.replace("0x", "");
         }
         String hexAmount = input.substring(input.length() - 64, input.length());
         BigDecimal amount = new BigDecimal(new BigInteger(hexAmount, 16).toString());
         BigDecimal bigDecimal = amount.divide(new BigDecimal(100000000000000000d), 18, BigDecimal.ROUND_UP);
-        return bigDecimal.toString();
+        return bigDecimal;
     }
 }
 

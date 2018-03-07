@@ -38,7 +38,7 @@
         </javaClientGenerator>
 
         <!-- 自动生成数据库表的对应关系  -->
-        <table tableName="user_coin_log" domainObjectName="userCoinLog"
+        <table tableName="user_coin_log" domainObjectName="UserCoinLog"
                enableCountByExample="false" enableUpdateByExample="true"
                enableDeleteByExample="false" enableSelectByExample="true"
                selectByExampleQueryId="false">

@@ -1,5 +1,6 @@
 package com.coinwallet.rechage.service;
 
+import com.coinwallet.common.InitConfig;
 import com.coinwallet.common.util.AES;
 import com.coinwallet.common.web3j.api.OWalletAPI;
 import com.coinwallet.common.web3j.bean.WalletInfo;
@@ -16,6 +17,9 @@ public class RechargeService {
     @Autowired(required = true)
     UserCoinBalanceMapper userCoinBalanceMapper;
 
+    @Autowired
+    private InitConfig initConfig;
+
     /**
      * create-wallet
      * @param createWalletReq userid
@@ -26,14 +30,14 @@ public class RechargeService {
         if(userCoinBalance==null){
             userCoinBalance =  new UserCoinBalance();
         }else{
-            return  null;
+            return  userCoinBalance;
         }
         try {
             WalletInfo walletInfo = OWalletAPI.generateWallet();
             userCoinBalance.setCoinAddress(walletInfo.getWalletAddress());
             userCoinBalance.setCoinName(merchantInfo.getMerchantName());
             userCoinBalance.setMerchantId(merchantInfo.getId());
-            userCoinBalance.setPrivatekey(AES.encrypt(walletInfo.getPrivateKey(),AES.DESKEY));
+            userCoinBalance.setPrivatekey(AES.encrypt(walletInfo.getPrivateKey(),initConfig.deskey));
             userCoinBalance.setUserid(createWalletReq.getUserid());
             userCoinBalanceMapper.insertSelective(userCoinBalance);
         }catch (Exception e){

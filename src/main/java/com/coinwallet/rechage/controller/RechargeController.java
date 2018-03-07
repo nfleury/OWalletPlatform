@@ -7,7 +7,7 @@ import com.coinwallet.rechage.controller.req.CreateWalletReq;
 import com.coinwallet.rechage.controller.resp.CreateWalletResp;
 import com.coinwallet.rechage.entity.MerchantInfo;
 import com.coinwallet.rechage.entity.UserCoinBalance;
-import com.coinwallet.rechage.rabbit.RabbitOrderConfig;
+import com.coinwallet.rechage.rabbit.RabbitRechargeConfig;
 import com.coinwallet.rechage.service.MerchantInfoService;
 import com.coinwallet.rechage.service.RechargeService;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -69,7 +69,7 @@ public class RechargeController {
         ResponseValue responseValue = new ResponseValue();
         redisTemplate.opsForValue().set("a","ddddddddddddd");
         System.out.println(redisTemplate.opsForValue().get("a"));
-        rabbitTemplate.convertAndSend(RabbitOrderConfig.CHECK_BALANCE_QUEUE_NAME,"hello msg");
+        rabbitTemplate.convertAndSend(RabbitRechargeConfig.CHECK_BALANCE_QUEUE_NAME,"hello msg");
         responseValue.setData("fgggf");
 
         return responseValue;
