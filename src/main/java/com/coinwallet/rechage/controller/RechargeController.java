@@ -51,7 +51,7 @@ public class RechargeController {
         MerchantInfo merchantInfo = merchantInfoService.getMerchantInfoById(merchatId);
         String jsonObject = AESCBCUtil.decrypt(in,merchantInfo.getMerchantName(),merchantInfo.getApikey(),merchantInfo.getSecurity(),seed);
         CreateWalletReq createWalletReq = JSON.parseObject(jsonObject, CreateWalletReq.class);
-        UserCoinBalance userCoinBalance = rechargeService.initUserCoinWallet1(createWalletReq, merchantInfo);
+        UserCoinBalance userCoinBalance = rechargeService.initUserCoinWallet(createWalletReq, merchantInfo);
         CreateWalletResp walletResp = new CreateWalletResp();
         walletResp.setAddress(userCoinBalance.getCoinAddress());
         responseValue.setData(walletResp);
