@@ -1,5 +1,6 @@
 package com.coinwallet.common.web3j.utils;
 
+import com.alibaba.fastjson.JSON;
 import com.coinwallet.common.web3j.bean.WalletInfo;
 import org.bouncycastle.util.encoders.Hex;
 import org.web3j.crypto.*;
@@ -22,7 +23,7 @@ public class OWalletUtils {
      * @throws NoSuchAlgorithmException
      * @throws NoSuchProviderException
      */
-    public static   WalletInfo generateWallet() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
+    public static WalletInfo generateWallet() throws InvalidAlgorithmParameterException, NoSuchAlgorithmException, NoSuchProviderException {
         ECKeyPair ecKeyPair = Keys.createEcKeyPair();
         return new WalletInfo(ecKeyPair);
     }
@@ -34,7 +35,7 @@ public class OWalletUtils {
      * @return
      * @throws CipherException
      */
-    public static  WalletFile getWalletFile(String password, ECKeyPair ecKeyPair) throws CipherException {
+    public static WalletFile getWalletFile(String password, ECKeyPair ecKeyPair) throws CipherException {
         return Wallet.createStandard(password, ecKeyPair);
     }
 
@@ -43,7 +44,7 @@ public class OWalletUtils {
      * @param ecKeyPair
      * @return
      */
-    public static  String getWalletPrivateKey(ECKeyPair ecKeyPair) {
+    public static String getWalletPrivateKey(ECKeyPair ecKeyPair) {
         byte[] bytes = new BigInteger(ecKeyPair.getPrivateKey().toString()).toByteArray();
         byte[] encode = Hex.encode(bytes);
         return new String(encode);
@@ -54,7 +55,7 @@ public class OWalletUtils {
      * @param privateKey
      * @return
      */
-    public static  ECKeyPair getEckeyPair(String privateKey) {
+    public static ECKeyPair getEckeyPair(String privateKey) {
         //通用 private key 还原 big integer private key
         byte[] decodeCode = Hex.decode(privateKey.getBytes());
         BigInteger resultBig = Numeric.toBigInt(decodeCode);
@@ -63,6 +64,48 @@ public class OWalletUtils {
     }
 
 
+    /**
+     * @param password
+     * @param walletFile
+     * @return
+     * @throws CipherException
+     */
+    public static ECKeyPair walletFileDecrypt(String password, WalletFile walletFile) throws CipherException {
+        return Wallet.decrypt(password, walletFile);
+    }
 
 
+    /**
+     * @param jsonKeySotre
+     * @return
+     */
+    public static WalletFile json2WalletFile(String jsonKeySotre) {
+        return JSON.parseObject(jsonKeySotre, new com.alibaba.fastjson.TypeReference<WalletFile>() {
+        });
+    }
+
+
+
+    /**
+     * custom info about to address
+     *
+     * @param input
+     * @return
+     */
+    public static String getTransactionTo(String input) {
+        if (input == null || "".equals(input)) return null;
+        return "0x" + input.substring(34, input.length() - 64);
+
+    }
+
+    /**
+     * custom info about contract amount
+     *
+     * @param input
+     * @return
+     */
+    public static String getTransactionAmount(String input) {
+        if (input == null || "".equals(input)) return null;
+        return CommonUtils.getSTAmount(input);
+    }
 }

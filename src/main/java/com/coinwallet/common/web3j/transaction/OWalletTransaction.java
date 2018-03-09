@@ -18,6 +18,7 @@ import org.web3j.crypto.Credentials;
 import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
+import org.web3j.protocol.core.methods.response.Transaction;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -174,7 +175,7 @@ public class OWalletTransaction {
      * @param endBlockNumber   eg:99999999
      * @return
      */
-    public static List<TransactionsResponse.Result> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
+    public static List<Transaction> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
         String url = transactions_by_address(address, startBlockNumber, endBlockNumber);
         System.out.println("url"+url);
 
@@ -185,6 +186,23 @@ public class OWalletTransaction {
         });
         return transactionResponse.getResult();
 
+    }
+
+
+
+
+    /**
+     *
+     * @return
+     */
+    public static BigInteger getRecentBlockNumber() {
+        String responseResult = RequestUtils.sendGet(getEthRecentBlockNumber());
+        responseResult = responseResult.replace("/n", "");
+        com.coinwallet.common.web3j.response.EtherScanResponse responseToken = JSON.parseObject(responseResult, new com.alibaba.fastjson.TypeReference<com.coinwallet.common.web3j.response.EtherScanResponse>() {
+        });
+        System.out.println("getRecentBlockNumber:"+responseToken.result);
+
+        return new BigInteger(responseToken.result.replace("0x", ""), 16);
     }
 
 }

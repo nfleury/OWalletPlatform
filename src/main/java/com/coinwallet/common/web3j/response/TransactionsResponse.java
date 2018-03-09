@@ -1,6 +1,7 @@
 package com.coinwallet.common.web3j.response;
 
 import com.coinwallet.common.web3j.utils.CommonUtils;
+import org.web3j.protocol.core.methods.response.Transaction;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public class TransactionsResponse {
 
     private String status;
     private String message;
-    private List<Result> result;
+    private List<Transaction> result;
 
     public void setStatus(String status) {
         this.status = status;
@@ -26,11 +27,11 @@ public class TransactionsResponse {
         return message;
     }
 
-    public void setResult(List<Result> result) {
+    public void setResult(List<Transaction> result) {
         this.result = result;
     }
 
-    public List<Result> getResult() {
+    public List<Transaction> getResult() {
         return result;
     }
 

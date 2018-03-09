@@ -1,12 +1,13 @@
 package com.coinwallet.common.web3j.api;
 
 import com.coinwallet.common.web3j.bean.WalletInfo;
-import com.coinwallet.common.web3j.response.TransactionsResponse;
 import com.coinwallet.common.web3j.transaction.OWalletTransaction;
 import com.coinwallet.common.web3j.utils.OWalletUtils;
 import org.web3j.crypto.ECKeyPair;
+import org.web3j.protocol.core.methods.response.Transaction;
 
 import java.io.IOException;
+import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
@@ -76,15 +77,26 @@ public class OWalletAPI {
         return OWalletTransaction.transactionOnContract(ecKeyPair, tokenAmount, toAddress, gas_price, gas_limit, data, ERC20Address);
     }
 
+
     /**
-     *
      * @param address
      * @param startBlockNumber
      * @param endBlockNumber
      * @return
      */
-    public static List<TransactionsResponse.Result> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
+    public static List<Transaction> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
         return OWalletTransaction.getTransactionList(address, startBlockNumber, endBlockNumber);
+    }
+
+
+    /**
+     *
+     * @return
+     * @throws IOException
+     */
+    public static BigInteger getRecentBlockNumber() throws IOException {
+
+        return OWalletTransaction.getRecentBlockNumber();
     }
 
 

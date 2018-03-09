@@ -24,6 +24,7 @@ public class EtherScanApi {
     public static String ROPSTEN_API = "https://ropsten.etherscan.io/api?";
 
     public static String Url = ETH_API;
+    //    public static int CHAIN_ID = ROPSTEN_CHAIN_ID;
     public static int CHAIN_ID = MAIN_CHAIN_ID;
 
     /**
@@ -77,6 +78,7 @@ public class EtherScanApi {
 
         return Url + "module=proxy&action=eth_call&to=" + to + "&data=" + data + "&tag=latest&apikey=" + APIKey.EtherScan_API_KEY;
 
+
     }
 
 
@@ -93,4 +95,17 @@ public class EtherScanApi {
 
     }
 
+
+    /**
+     * get blockNumber recent
+     * https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken
+     *
+     * https://api.etherscan.io/api?module=proxy&action=eth_blockNumber&apikey=YourApiKeyToken
+     */
+
+
+    public static String getEthRecentBlockNumber() {
+        return Url + "module=proxy&action=eth_blockNumber&apikey=" + APIKey.EtherScan_API_KEY;
+
+    }
 }
