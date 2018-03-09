@@ -3,6 +3,7 @@ package com.coinwallet.common.web3j.response;
 import com.coinwallet.common.web3j.utils.CommonUtils;
 import org.web3j.protocol.core.methods.response.Transaction;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 public class TransactionsResponse {
@@ -210,7 +211,7 @@ public class TransactionsResponse {
         }
 
         //custom info about contract amount
-        public String getTransactionAmount() {
+        public BigDecimal getTransactionAmount() {
             if (input == null || "".equals(input)) return null;
             return CommonUtils.getSTAmount(input);
         }
