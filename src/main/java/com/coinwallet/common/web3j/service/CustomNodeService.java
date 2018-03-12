@@ -25,9 +25,9 @@ public class CustomNodeService extends Service {
             = MediaType.parse("application/json; charset=utf-8");
 
 
-    public  static final String NODE_URL = "http://h.stormfives.com:34378";
-//    public static final String DEFAULT_URL = "http://192.168.1.47:8545/";
-    public static final String DEFAULT_URL = NODE_URL;
+    //    public  static final String NODE_URL = "http://h.stormfives.com:34378";
+    public static final String DEFAULT_URL = "http://192.168.1.47:8545/";
+//    public static final String DEFAULT_URL = NODE_URL;
 
     private static final Logger log = LoggerFactory.getLogger(HttpService.class);
 
