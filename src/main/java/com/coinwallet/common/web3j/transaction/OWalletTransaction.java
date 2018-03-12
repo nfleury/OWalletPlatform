@@ -2,7 +2,9 @@ package com.coinwallet.common.web3j.transaction;
 
 import com.alibaba.fastjson.JSON;
 import com.coinwallet.common.web3j.api.EtherScanApi;
+import com.coinwallet.common.web3j.response.BlockInfoResponse;
 import com.coinwallet.common.web3j.response.EtherScanResponse;
+import com.coinwallet.common.web3j.response.TransactionReceiptResponse;
 import com.coinwallet.common.web3j.response.TransactionsResponse;
 import com.coinwallet.common.web3j.utils.RawTransactionUtils;
 import com.coinwallet.common.web3j.utils.RequestUtils;
@@ -18,7 +20,6 @@ import org.web3j.crypto.Credentials;
 import org.web3j.crypto.ECKeyPair;
 import org.web3j.crypto.RawTransaction;
 import org.web3j.crypto.TransactionEncoder;
-import org.web3j.protocol.core.methods.response.Transaction;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -160,12 +161,21 @@ public class OWalletTransaction {
     public static final String txHash = "0x1a763acca69a048d413311bdf2ce795b01415c5220892dcb5765a47fce559143";
 
 
-    public void transactionReceipt() {
+    /**
+     * @param txHash
+     * @return
+     */
+    public static TransactionReceiptResponse transactionReceipt(String txHash) {
         String url = getTransactionReceipt(txHash);
         String responseResult = RequestUtils.sendGet(url);
         responseResult = responseResult.replace("/n", "");
-        System.out.println("TransactionReceipt:" + responseResult);
+        TransactionReceiptResponse transactionReceiptResponse = JSON.parseObject(responseResult, new com.alibaba.fastjson.TypeReference<TransactionReceiptResponse>() {
+
+        });
+        return transactionReceiptResponse;
+
     }
+
 
 
     /**
@@ -175,7 +185,7 @@ public class OWalletTransaction {
      * @param endBlockNumber   eg:99999999
      * @return
      */
-    public static List<Transaction> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
+    public static List<TransactionsResponse.CustomTransaction> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
         String url = transactions_by_address(address, startBlockNumber, endBlockNumber);
         System.out.println("url"+url);
 
@@ -203,6 +213,19 @@ public class OWalletTransaction {
         System.out.println("getRecentBlockNumber:"+responseToken.result);
 
         return new BigInteger(responseToken.result.replace("0x", ""), 16);
+    }
+
+    /**
+     * @param blockNo
+     * @return
+     */
+    public static BlockInfoResponse getBlockInfo(String blockNo) {
+        String responseResult = RequestUtils.sendGet(getEthRecentBlockInfo(blockNo));
+        responseResult = responseResult.replace("/n", "");
+
+        BlockInfoResponse responseToken = JSON.parseObject(responseResult, new com.alibaba.fastjson.TypeReference<BlockInfoResponse>() {
+        });
+        return responseToken;
     }
 
 }

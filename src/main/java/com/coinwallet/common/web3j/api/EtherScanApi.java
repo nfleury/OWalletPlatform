@@ -108,4 +108,15 @@ public class EtherScanApi {
         return Url + "module=proxy&action=eth_blockNumber&apikey=" + APIKey.EtherScan_API_KEY;
 
     }
+
+
+    /**
+     * //https://api.etherscan.io/api?module=block&action=getblockreward&blockno=2165403&apikey=YourApiKeyToken
+     *
+     * @return
+     */
+    public static String getEthRecentBlockInfo(String blockNo) {
+        return Url + "module=block&action=getblockreward&blockno=" + blockNo + "&apikey=" + APIKey.EtherScan_API_KEY;
+
+    }
 }
