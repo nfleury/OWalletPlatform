@@ -2,6 +2,8 @@ package com.coinwallet.common.web3j.transaction;
 
 import com.alibaba.fastjson.JSON;
 import com.coinwallet.common.web3j.api.EtherScanApi;
+import com.coinwallet.common.web3j.api.OWalletAPI;
+import com.coinwallet.common.web3j.bean.TransactionVerificationInfo;
 import com.coinwallet.common.web3j.response.BlockInfoResponse;
 import com.coinwallet.common.web3j.response.EtherScanResponse;
 import com.coinwallet.common.web3j.response.TransactionReceiptResponse;
@@ -28,6 +30,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.coinwallet.common.web3j.api.EtherScanApi.*;
+import static com.coinwallet.common.web3j.utils.CommonUtils.Hex2Decimal;
+import static com.coinwallet.common.web3j.utils.CommonUtils.bit18;
 import static org.web3j.abi.Utils.convert;
 
 /**
@@ -226,6 +230,37 @@ public class OWalletTransaction {
         BlockInfoResponse responseToken = JSON.parseObject(responseResult, new com.alibaba.fastjson.TypeReference<BlockInfoResponse>() {
         });
         return responseToken;
+    }
+
+
+
+
+
+    /**
+     *
+     *
+     * @param txHash
+     * @return
+     * @throws IOException
+     */
+    public static TransactionVerificationInfo verifyTransaction(String txHash) throws IOException {
+        BigInteger recentBlockNumber = OWalletAPI.getRecentBlockNumber();
+        TransactionReceiptResponse transactionReceiptResponse = OWalletTransaction.transactionReceipt(txHash);
+        String blockNumberRaw = transactionReceiptResponse.getResult().getBlockNumber();
+        String gasUsed = transactionReceiptResponse.getResult().getGasUsed();
+        BigDecimal gasUsed_B = bit18(Hex2Decimal(gasUsed));
+        if (blockNumberRaw == null) return null;
+        BigInteger txBlockNumber;
+        if (blockNumberRaw.startsWith("0x")) {
+            txBlockNumber = Hex2Decimal(blockNumberRaw);
+        } else {
+            txBlockNumber = new BigInteger(blockNumberRaw);
+        }
+        boolean isConfirm12 = recentBlockNumber.compareTo(txBlockNumber.add(new BigInteger("12"))) > 0;
+        boolean statusIsSuccess = "0x1".equals(transactionReceiptResponse.getResult().getStatus());
+        BlockInfoResponse blockInfo = OWalletTransaction.getBlockInfo(txBlockNumber.toString());
+        Long timeStamp = new Long(blockInfo.getResult().getTimeStamp());
+        return new TransactionVerificationInfo(isConfirm12 && statusIsSuccess, timeStamp, gasUsed_B);
     }
 
 }
