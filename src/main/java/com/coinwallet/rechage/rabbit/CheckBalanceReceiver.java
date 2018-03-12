@@ -24,8 +24,8 @@ public class CheckBalanceReceiver {
 
     @RabbitListener(queues= RabbitRechargeConfig.CHECK_BALANCE_QUEUE_NAME)
     public void coinCharge(String msg) {
-        TransactionsResponse.Result record = JSON.parseObject(msg, TransactionsResponse.Result.class);
         try {
+            TransactionsResponse.Result record = JSON.parseObject(msg, TransactionsResponse.Result.class);
             UserCoinBalanceExample userCoinBalanceExample = new UserCoinBalanceExample();
             userCoinBalanceExample.createCriteria().andCoinAddressEqualTo(record.getTransactionTo());
             UserCoinBalance userCoinBalance = userCoinBalanceMapper.selectByExample(userCoinBalanceExample).get(0);
