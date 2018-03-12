@@ -1,10 +1,10 @@
 package com.coinwallet.common.web3j.api;
 
 import com.coinwallet.common.web3j.bean.WalletInfo;
+import com.coinwallet.common.web3j.response.TransactionsResponse;
 import com.coinwallet.common.web3j.transaction.OWalletTransaction;
 import com.coinwallet.common.web3j.utils.OWalletUtils;
 import org.web3j.crypto.ECKeyPair;
-import org.web3j.protocol.core.methods.response.Transaction;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -84,7 +84,7 @@ public class OWalletAPI {
      * @param endBlockNumber
      * @return
      */
-    public static List<Transaction> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
+    public static List<TransactionsResponse.CustomTransaction> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
         return OWalletTransaction.getTransactionList(address, startBlockNumber, endBlockNumber);
     }
 

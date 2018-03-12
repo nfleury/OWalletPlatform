@@ -1,10 +1,10 @@
 package com.coinwallet.common.web3j.transaction;
 
+import com.coinwallet.common.web3j.service.CustomNodeService;
 import com.coinwallet.common.web3j.utils.CommonUtils;
 import com.coinwallet.common.web3j.utils.RawTransactionUtils;
 import org.bouncycastle.util.encoders.Hex;
 import org.web3j.abi.FunctionEncoder;
-import org.web3j.abi.FunctionReturnDecoder;
 import org.web3j.abi.TypeReference;
 import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Function;
@@ -24,12 +24,24 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by y on 2018/3/7.
  */
 public class TransactionOnNode {
+
+
+    static String testPrivateContra = "0x44c93945Be58d30D89643ECdeC1e3C8005cd2413";
+
+
+    static String testWalletAddr = "0xFa7C12466Bfcb1a702ca9Bc6715BC5964452466c";
+
+    public static void main(String[] arg) throws IOException {
+        Web3j web3j = Web3j.build(new CustomNodeService());
+        BigDecimal bigDecimal = balanceOfContractToken(web3j, testPrivateContra, testWalletAddr);
+        System.out.println("ocn:" + bigDecimal.toString());
+    }
+
 
     /**
      * @param web3j
@@ -55,9 +67,7 @@ public class TransactionOnNode {
                         transactionManager.getFromAddress(), contractAddress, encodedFunction),
                 DefaultBlockParameterName.LATEST)
                 .send();
-        List<Type> decode = FunctionReturnDecoder.decode(ethCall.getValue(), function.getOutputParameters());
-        BigInteger bigInteger = new BigInteger(decode.get(0).getValue().toString());
-        return CommonUtils.bit18(bigInteger);
+        return new BigDecimal(CommonUtils.Hex2Decimal(ethCall.getValue()));
     }
 
 
