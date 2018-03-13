@@ -263,4 +263,9 @@ public class OWalletTransaction {
         return new TransactionVerificationInfo(isConfirm12 && statusIsSuccess, timeStamp, gasUsed_B);
     }
 
+
+
+
+
+
 }

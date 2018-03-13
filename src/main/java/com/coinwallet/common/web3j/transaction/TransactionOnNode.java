@@ -1,5 +1,6 @@
 package com.coinwallet.common.web3j.transaction;
 
+import com.coinwallet.common.web3j.bean.TransactionVerificationInfo;
 import com.coinwallet.common.web3j.service.CustomNodeService;
 import com.coinwallet.common.web3j.utils.CommonUtils;
 import com.coinwallet.common.web3j.utils.RawTransactionUtils;
@@ -10,8 +11,12 @@ import org.web3j.abi.datatypes.Address;
 import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Uint256;
-import org.web3j.crypto.*;
+import org.web3j.crypto.Credentials;
+import org.web3j.crypto.ECKeyPair;
+import org.web3j.crypto.RawTransaction;
+import org.web3j.crypto.TransactionEncoder;
 import org.web3j.protocol.Web3j;
+import org.web3j.protocol.core.DefaultBlockParameter;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.*;
 import org.web3j.tx.TransactionManager;
@@ -22,92 +27,13 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Arrays;
 
+import static com.coinwallet.common.web3j.utils.CommonUtils.Hex2Decimal;
+import static com.coinwallet.common.web3j.utils.CommonUtils.bit18;
+
 /**
  * Created by y on 2018/3/7.
  */
 public class TransactionOnNode {
-
-
-    static String testPrivateContra = "0x44c93945Be58d30D89643ECdeC1e3C8005cd2413";
-
-    static String Acount1 = "";
-    static String Acount_2 = "0xe6F637D4d98CFD1E43c4C66F6CE5a7C6d5C8D364";
-    static String testWalletAddr = "0xFa7C12466Bfcb1a702ca9Bc6715BC5964452466c";
-
-    public static void main(String[] arg) throws IOException, CipherException {
-        Web3j web3j = Web3j.build(new CustomNodeService());
-//        BigDecimal bigDecimal = balanceOfContractToken(web3j, testPrivateContra, testWalletAddr);
-//        System.out.println("ocn:" + bigDecimal.toString());
-
-        testBlockGasLimit();
-    }
-
-
-    public static void test() throws IOException {
-        Web3j web3j = Web3j.build(new CustomNodeService());
-        EthGetTransactionReceipt send = web3j.ethGetTransactionReceipt("0x24ceacad8f754927f5e84f44550f2d8209dcc28923ffd39557e4eb61503de6e2").send();
-//        send.ge
-    }
-
-    public static void testBlockGasLimit() throws IOException, CipherException {
-        Web3j web3j = Web3j.build(new CustomNodeService());  // defaults to http://localhost:8545/
-        String path = "/Users/y/Desktop/keystore";
-        Credentials credentials1 = WalletUtils.loadCredentials("123456", path);
-
-        BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice();
-        System.out.println(" ————-----------------------1-----------------------------");
-
-        EthGetTransactionCount ethGetTransactionCount = web3j.ethGetTransactionCount(credentials1.getAddress(), DefaultBlockParameterName.LATEST).send();
-//        EthEstimateGas gas = web3j.ethEstimateGas(new org.web3j.protocol.core.methods.request.Transaction(credentials1.getAddress(), ethGetTransactionCount.getTransactionCount(), gasPrice, new BigInteger("210000"), testPrivateContra, new BigInteger("0"), "")).send();
-//        System.out.println(" ————------------------2----------------------------------");
-
-
-        EthEstimateGas ethEstimateGas = web3j.ethEstimateGas(
-                org.web3j.protocol.core.methods.request.Transaction.createContractTransaction(
-                        credentials1.getAddress(), ethGetTransactionCount.getTransactionCount(),
-                        gasPrice, "")).send();
-        System.out.println("fsd:" + ethEstimateGas.getAmountUsed());
-
-
-        EthEstimateGas gasContract = web3j.ethEstimateGas(
-                org.web3j.protocol.core.methods.request.Transaction.createContractTransaction(
-                        credentials1.getAddress(), ethGetTransactionCount.getTransactionCount(),
-                        gasPrice, "")).send();
-        System.out.println("[]ttt————" + gasContract.getAmountUsed());
-        try {
-            String s = TransactionOnNode.transactionOnContract(web3j, credentials1.getEcKeyPair(), "1", Acount_2, gasPrice.toString(), gasContract.getAmountUsed().toString(), "", testPrivateContra);
-            System.out.println("[]ttt————[][]" + s);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-    }
-
-
-    public void testEthEstimateGas(Web3j web3j) throws Exception {
-        web3j.ethEstimateGas(
-                org.web3j.protocol.core.methods.request.Transaction.createEthCallTransaction(
-                        "0xa70e8dd61c5d32be8058bb8eb970870f07233155",
-                        "0x52b93c80364dc2dd4444c146d73b9836bbbb2b3f", "0x0")).send();
-
-//        verifyResult("{\"jsonrpc\":\"2.0\",\"method\":\"eth_estimateGas\","
-//                + "\"params\":[{\"from\":\"0xa70e8dd61c5d32be8058bb8eb970870f07233155\","
-//                + "\"to\":\"0x52b93c80364dc2dd4444c146d73b9836bbbb2b3f\",\"data\":\"0x0\"}],"
-//                + "\"id\":1}");
-    }
-
-
-    public void testEthEstimateGasContractCreation(Web3j web3j) throws Exception {
-        web3j.ethEstimateGas(
-                org.web3j.protocol.core.methods.request.Transaction.createContractTransaction(
-                        "0x52b93c80364dc2dd4444c146d73b9836bbbb2b3f", BigInteger.ONE,
-                        BigInteger.TEN, "")).send();
-
-//        verifyResult("{\"jsonrpc\":\"2.0\",\"method\":\"eth_estimateGas\","
-//                + "\"params\":[{\"from\":\"0x52b93c80364dc2dd4444c146d73b9836bbbb2b3f\","
-//                + "\"gasPrice\":\"0xa\",\"data\":\"0x\",\"nonce\":\"0x1\"}],\"id\":1}");
-    }
 
 
     /**
@@ -294,7 +220,6 @@ public class TransactionOnNode {
 
 
     /**
-     *
      * @param web3j
      * @param from
      * @param nonce
@@ -326,6 +251,39 @@ public class TransactionOnNode {
                         from, nonce,
                         gasPrice, "")).send();
         return gasContract.getAmountUsed();
+    }
+
+
+    public static EthBlock getBlockBuNumber(Web3j web3j, BigInteger blockNumber) throws IOException {
+        EthBlock ethBlock = web3j.ethGetBlockByNumber(DefaultBlockParameter.valueOf(blockNumber), true).send();
+        return ethBlock;
+    }
+
+    /**
+     * @param txHash
+     * @return
+     * @throws IOException
+     */
+    public static TransactionVerificationInfo verifyTransaction(String txHash) throws IOException {
+        Web3j web3j = Web3j.build(new CustomNodeService());
+        BigInteger recentBlockNumber = getRecentBlockNumber(web3j);
+        System.out.println("txHash" + txHash);
+        TransactionReceipt transactionReceipt = getTransactionReceipt(web3j, txHash);
+        String blockNumberRaw = transactionReceipt.getBlockNumber().toString();
+        String gasUsed = transactionReceipt.getGasUsed().toString();
+        BigDecimal gasUsed_B = bit18(Hex2Decimal(gasUsed));
+        if (blockNumberRaw == null) return null;
+        BigInteger txBlockNumber;
+        if (blockNumberRaw.startsWith("0x")) {
+            txBlockNumber = Hex2Decimal(blockNumberRaw);
+        } else {
+            txBlockNumber = new BigInteger(blockNumberRaw);
+        }
+        boolean isConfirm12 = recentBlockNumber.compareTo(txBlockNumber.add(new BigInteger("12"))) > 0;
+        boolean statusIsSuccess = "0x1".equals(transactionReceipt.getStatus());
+        EthBlock block = getBlockBuNumber(web3j, txBlockNumber);
+        Long timeStamp = new Long(block.getBlock().getTimestamp().toString());
+        return new TransactionVerificationInfo(isConfirm12 && statusIsSuccess, timeStamp, gasUsed_B);
     }
 
 }
