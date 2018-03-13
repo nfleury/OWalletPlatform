@@ -6,6 +6,7 @@ import org.bouncycastle.util.encoders.Hex;
 import org.web3j.crypto.*;
 import org.web3j.utils.Numeric;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.NoSuchAlgorithmException;
@@ -85,7 +86,6 @@ public class OWalletUtils {
     }
 
 
-
     /**
      * custom info about to address
      *
@@ -107,5 +107,16 @@ public class OWalletUtils {
     public static String getTransactionAmount(String input) {
         if (input == null || "".equals(input)) return null;
         return CommonUtils.getSTAmount(input);
+    }
+
+
+    /**
+     * @param gasPrice
+     * @param gasUsed
+     * @return
+     */
+    public static BigDecimal getTransactionFee(BigDecimal gasPrice, BigDecimal gasUsed) {
+        BigDecimal bigDecimal = gasPrice.multiply(gasUsed).divide(new BigDecimal(1000000000000000000d), 18, BigDecimal.ROUND_UP);
+        return bigDecimal;
     }
 }
