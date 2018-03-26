@@ -2,6 +2,7 @@ package com.coinwallet.rechage.entity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserCoinLogExample {
@@ -402,6 +403,266 @@ public class UserCoinLogExample {
 
         public Criteria andChangeNumNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("change_num not between", value1, value2, "changeNum");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdIsNull() {
+            addCriterion("coin_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdIsNotNull() {
+            addCriterion("coin_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdEqualTo(Integer value) {
+            addCriterion("coin_id =", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdNotEqualTo(Integer value) {
+            addCriterion("coin_id <>", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdGreaterThan(Integer value) {
+            addCriterion("coin_id >", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("coin_id >=", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdLessThan(Integer value) {
+            addCriterion("coin_id <", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdLessThanOrEqualTo(Integer value) {
+            addCriterion("coin_id <=", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdIn(List<Integer> values) {
+            addCriterion("coin_id in", values, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdNotIn(List<Integer> values) {
+            addCriterion("coin_id not in", values, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdBetween(Integer value1, Integer value2) {
+            addCriterion("coin_id between", value1, value2, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("coin_id not between", value1, value2, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameIsNull() {
+            addCriterion("coin_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameIsNotNull() {
+            addCriterion("coin_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameEqualTo(String value) {
+            addCriterion("coin_name =", value, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameNotEqualTo(String value) {
+            addCriterion("coin_name <>", value, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameGreaterThan(String value) {
+            addCriterion("coin_name >", value, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameGreaterThanOrEqualTo(String value) {
+            addCriterion("coin_name >=", value, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameLessThan(String value) {
+            addCriterion("coin_name <", value, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameLessThanOrEqualTo(String value) {
+            addCriterion("coin_name <=", value, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameLike(String value) {
+            addCriterion("coin_name like", value, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameNotLike(String value) {
+            addCriterion("coin_name not like", value, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameIn(List<String> values) {
+            addCriterion("coin_name in", values, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameNotIn(List<String> values) {
+            addCriterion("coin_name not in", values, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameBetween(String value1, String value2) {
+            addCriterion("coin_name between", value1, value2, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinNameNotBetween(String value1, String value2) {
+            addCriterion("coin_name not between", value1, value2, "coinName");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashIsNull() {
+            addCriterion("order_tx_hash is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashIsNotNull() {
+            addCriterion("order_tx_hash is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashEqualTo(String value) {
+            addCriterion("order_tx_hash =", value, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashNotEqualTo(String value) {
+            addCriterion("order_tx_hash <>", value, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashGreaterThan(String value) {
+            addCriterion("order_tx_hash >", value, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashGreaterThanOrEqualTo(String value) {
+            addCriterion("order_tx_hash >=", value, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashLessThan(String value) {
+            addCriterion("order_tx_hash <", value, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashLessThanOrEqualTo(String value) {
+            addCriterion("order_tx_hash <=", value, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashLike(String value) {
+            addCriterion("order_tx_hash like", value, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashNotLike(String value) {
+            addCriterion("order_tx_hash not like", value, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashIn(List<String> values) {
+            addCriterion("order_tx_hash in", values, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashNotIn(List<String> values) {
+            addCriterion("order_tx_hash not in", values, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashBetween(String value1, String value2) {
+            addCriterion("order_tx_hash between", value1, value2, "orderTxHash");
+            return (Criteria) this;
+        }
+
+        public Criteria andOrderTxHashNotBetween(String value1, String value2) {
+            addCriterion("order_tx_hash not between", value1, value2, "orderTxHash");
             return (Criteria) this;
         }
     }

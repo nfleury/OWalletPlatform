@@ -1,5 +1,6 @@
 package com.coinwallet.common.web3j.service;
 
+import com.coinwallet.common.util.Constants;
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
 import okio.Buffer;
@@ -19,16 +20,14 @@ import java.util.Map;
 /**
  * Created by y on 2018/3/6.
  */
+@org.springframework.stereotype.Service
 public class CustomNodeService extends Service {
 
     public static final MediaType JSON_MEDIA_TYPE
             = MediaType.parse("application/json; charset=utf-8");
 
 
-    public static final String NODE_MAIN_URL = "http://h.stormfives.com";
-    public static final String NODE_PRIVE_URL = "http://192.168.1.47:8545/";
-    public static final String DEFAULT_URL = NODE_MAIN_URL;
-//    public static final String DEFAULT_URL = NODE_PRIVE_URL;
+    public static final String DEFAULT_URL = Constants.BLOCK_NODE_URL;
 
 
     private static final Logger log = LoggerFactory.getLogger(HttpService.class);

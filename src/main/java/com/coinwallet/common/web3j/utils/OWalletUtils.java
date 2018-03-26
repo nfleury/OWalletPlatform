@@ -104,7 +104,7 @@ public class OWalletUtils {
      * @param input
      * @return
      */
-    public static String getTransactionAmount(String input) {
+    public static BigDecimal getTransactionAmount(String input) {
         if (input == null || "".equals(input)) return null;
         return CommonUtils.getSTAmount(input);
     }
@@ -118,5 +118,10 @@ public class OWalletUtils {
     public static BigDecimal getTransactionFee(BigDecimal gasPrice, BigDecimal gasUsed) {
         BigDecimal bigDecimal = gasPrice.multiply(gasUsed).divide(new BigDecimal(1000000000000000000d), 18, BigDecimal.ROUND_UP);
         return bigDecimal;
+    }
+
+
+    public static boolean verify12Block(BigInteger txBlockNumber, BigInteger recentBlockNumber) {
+        return recentBlockNumber.compareTo(txBlockNumber.add(new BigInteger("12"))) > 0;
     }
 }

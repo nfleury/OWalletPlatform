@@ -18,27 +18,27 @@
         </filter>
 
         <springProfile name="!prod">
-            <remoteHost>10.0.1.163</remoteHost>
+            <remoteHost>172.31.6.80</remoteHost>
         </springProfile>
 
         <springProfile name="prod">
-            <remoteHost>10.1.1.83</remoteHost>
+            <remoteHost>172.31.6.80</remoteHost>
         </springProfile>
 
         <port>4567</port>
         <!-- encoder is required -->
         <encoder class="net.logstash.logback.encoder.LogstashEncoder">
             <springProfile name="dev">
-                <customFields>{"service_name":"dev-h5-service"}</customFields>
+                <customFields>{"service_name":"dev-coin-wallet"}</customFields>
             </springProfile>
             <springProfile name="test">
-                <customFields>{"service_name":"test-h5-service"}</customFields>
+                <customFields>{"service_name":"test-coin-wallet"}</customFields>
             </springProfile>
             <springProfile name="release">
-                <customFields>{"service_name":"release-h5-service"}</customFields>
+                <customFields>{"service_name":"release-coin-wallet"}</customFields>
             </springProfile>
             <springProfile name="prod">
-                <customFields>{"service_name":"prod-h5-service"}</customFields>
+                <customFields>{"service_name":"prod-coin-wallet"}</customFields>
             </springProfile>
         </encoder>
 
@@ -51,9 +51,9 @@
         </root>
     </springProfile>
 
-    <!--<springProfile name="!default">
-        <root level="ERROR">
+    <springProfile name="!default">
+        <root level="warn">
             <appender-ref ref="stash"/>
         </root>
-    </springProfile>-->
+    </springProfile>
 </configuration>

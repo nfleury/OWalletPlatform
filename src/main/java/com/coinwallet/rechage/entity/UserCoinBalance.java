@@ -1,21 +1,38 @@
 package com.coinwallet.rechage.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class UserCoinBalance {
+    private Integer id;
+
     private Integer userid;
 
     private Integer merchantId;
 
+    private Integer coinId;
+
     private String coinName;
-
-    private String coinAddress;
-
-    private String privatekey;
 
     private BigDecimal coinBalance;
 
     private BigDecimal showBalance;
+
+    private Byte userStatus;
+
+    private Date lastTradingTime;
+
+    private Byte transferStatus;
+
+    private Date createTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public Integer getUserid() {
         return userid;
@@ -33,28 +50,20 @@ public class UserCoinBalance {
         this.merchantId = merchantId;
     }
 
+    public Integer getCoinId() {
+        return coinId;
+    }
+
+    public void setCoinId(Integer coinId) {
+        this.coinId = coinId;
+    }
+
     public String getCoinName() {
         return coinName;
     }
 
     public void setCoinName(String coinName) {
         this.coinName = coinName;
-    }
-
-    public String getCoinAddress() {
-        return coinAddress;
-    }
-
-    public void setCoinAddress(String coinAddress) {
-        this.coinAddress = coinAddress;
-    }
-
-    public String getPrivatekey() {
-        return privatekey;
-    }
-
-    public void setPrivatekey(String privatekey) {
-        this.privatekey = privatekey;
     }
 
     public BigDecimal getCoinBalance() {
@@ -71,5 +80,37 @@ public class UserCoinBalance {
 
     public void setShowBalance(BigDecimal showBalance) {
         this.showBalance = showBalance;
+    }
+
+    public Byte getUserStatus() {
+        return userStatus;
+    }
+
+    public void setUserStatus(Byte userStatus) {
+        this.userStatus = userStatus;
+    }
+
+    public Date getLastTradingTime() {
+        return lastTradingTime;
+    }
+
+    public void setLastTradingTime(Date lastTradingTime) {
+        this.lastTradingTime = lastTradingTime;
+    }
+
+    public Byte getTransferStatus() {
+        return transferStatus;
+    }
+
+    public void setTransferStatus(Byte transferStatus) {
+        this.transferStatus = transferStatus;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }

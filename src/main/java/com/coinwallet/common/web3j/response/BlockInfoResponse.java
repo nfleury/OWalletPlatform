@@ -42,7 +42,7 @@ public class BlockInfoResponse {
     }
 
 
-    public class BlockInfo {
+    public static class BlockInfo {
 
         private String blockNumber;
         private String timeStamp;
@@ -101,7 +101,7 @@ public class BlockInfoResponse {
 
     }
 
-    public class Uncles {
+    public static class Uncles {
 
         private String miner;
         private String unclePosition;

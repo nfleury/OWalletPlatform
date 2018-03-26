@@ -21,10 +21,10 @@ public class EtherScanApi {
     public static int ROPSTEN_CHAIN_ID = 3;
 
     public static String ETH_API = "http://api.etherscan.io/api?";
-    public static String ROPSTEN_API = "https://ropsten.etherscan.io/api?";
+//    public static String ROPSTEN_API = "https://ropsten.etherscan.io/api?";
 
     public static String Url = ETH_API;
-    //    public static int CHAIN_ID = ROPSTEN_CHAIN_ID;
+//        public static int CHAIN_ID = ROPSTEN_CHAIN_ID;
     public static int CHAIN_ID = MAIN_CHAIN_ID;
 
     /**

@@ -1,6 +1,7 @@
 package com.coinwallet.rechage.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class UserCoinLog {
     private Integer id;
@@ -12,6 +13,14 @@ public class UserCoinLog {
     private Integer changeType;
 
     private BigDecimal changeNum;
+
+    private Integer coinId;
+
+    private String coinName;
+
+    private Date createTime;
+
+    private String orderTxHash;
 
     public Integer getId() {
         return id;
@@ -51,5 +60,37 @@ public class UserCoinLog {
 
     public void setChangeNum(BigDecimal changeNum) {
         this.changeNum = changeNum;
+    }
+
+    public Integer getCoinId() {
+        return coinId;
+    }
+
+    public void setCoinId(Integer coinId) {
+        this.coinId = coinId;
+    }
+
+    public String getCoinName() {
+        return coinName;
+    }
+
+    public void setCoinName(String coinName) {
+        this.coinName = coinName;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getOrderTxHash() {
+        return orderTxHash;
+    }
+
+    public void setOrderTxHash(String orderTxHash) {
+        this.orderTxHash = orderTxHash;
     }
 }

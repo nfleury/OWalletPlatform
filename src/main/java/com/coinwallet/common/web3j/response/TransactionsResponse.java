@@ -1,8 +1,14 @@
 package com.coinwallet.common.web3j.response;
 
+import org.web3j.protocol.core.methods.response.Transaction;
+
+import java.math.BigInteger;
 import java.util.List;
 
 public class TransactionsResponse {
+
+    public TransactionsResponse() {
+    }
 
     private String status;
     private String message;
@@ -33,106 +39,33 @@ public class TransactionsResponse {
     }
 
 
-    public class CustomTransaction  {
+    public static class CustomTransaction extends Transaction {
 
-        private String blockNumber;
         private String timeStamp;
-        private String hash;
-        private String nonce;
-        private String blockHash;
-        private String transactionIndex;
-        private String from;
-        private String to;
-        private String value;
-        private String gas;
-        private String gasPrice;
         private String isError;
         private String txreceipt_status;
-        private String input;
         private String contractAddress;
         private String cumulativeGasUsed;
         private String gasUsed;
         private String confirmations;
-        public void setBlockNumber(String blockNumber) {
-            this.blockNumber = blockNumber;
-        }
-        public String getBlockNumber() {
-            return blockNumber;
+
+
+        public CustomTransaction() {
         }
 
         public void setTimeStamp(String timeStamp) {
             this.timeStamp = timeStamp;
         }
+
         public String getTimeStamp() {
             return timeStamp;
         }
 
-        public void setHash(String hash) {
-            this.hash = hash;
-        }
-        public String getHash() {
-            return hash;
-        }
-
-        public void setNonce(String nonce) {
-            this.nonce = nonce;
-        }
-        public String getNonce() {
-            return nonce;
-        }
-
-        public void setBlockHash(String blockHash) {
-            this.blockHash = blockHash;
-        }
-        public String getBlockHash() {
-            return blockHash;
-        }
-
-        public void setTransactionIndex(String transactionIndex) {
-            this.transactionIndex = transactionIndex;
-        }
-        public String getTransactionIndex() {
-            return transactionIndex;
-        }
-
-        public void setFrom(String from) {
-            this.from = from;
-        }
-        public String getFrom() {
-            return from;
-        }
-
-        public void setTo(String to) {
-            this.to = to;
-        }
-        public String getTo() {
-            return to;
-        }
-
-        public void setValue(String value) {
-            this.value = value;
-        }
-        public String getValue() {
-            return value;
-        }
-
-        public void setGas(String gas) {
-            this.gas = gas;
-        }
-        public String getGas() {
-            return gas;
-        }
-
-        public void setGasPrice(String gasPrice) {
-            this.gasPrice = gasPrice;
-        }
-        public String getGasPrice() {
-            return gasPrice;
-        }
 
         public void setIsError(String isError) {
             this.isError = isError;
         }
+
         public String getIsError() {
             return isError;
         }
@@ -140,20 +73,16 @@ public class TransactionsResponse {
         public void setTxreceipt_status(String txreceipt_status) {
             this.txreceipt_status = txreceipt_status;
         }
+
         public String getTxreceipt_status() {
             return txreceipt_status;
         }
 
-        public void setInput(String input) {
-            this.input = input;
-        }
-        public String getInput() {
-            return input;
-        }
 
         public void setContractAddress(String contractAddress) {
             this.contractAddress = contractAddress;
         }
+
         public String getContractAddress() {
             return contractAddress;
         }
@@ -161,6 +90,7 @@ public class TransactionsResponse {
         public void setCumulativeGasUsed(String cumulativeGasUsed) {
             this.cumulativeGasUsed = cumulativeGasUsed;
         }
+
         public String getCumulativeGasUsed() {
             return cumulativeGasUsed;
         }
@@ -168,6 +98,7 @@ public class TransactionsResponse {
         public void setGasUsed(String gasUsed) {
             this.gasUsed = gasUsed;
         }
+
         public String getGasUsed() {
             return gasUsed;
         }
@@ -175,9 +106,44 @@ public class TransactionsResponse {
         public void setConfirmations(String confirmations) {
             this.confirmations = confirmations;
         }
+
         public String getConfirmations() {
             return confirmations;
         }
+
+        @Override
+        public BigInteger getBlockNumber() {
+            return new BigInteger(getBlockNumberRaw());
+        }
+
+        @Override
+        public BigInteger getGas() {
+            return new BigInteger(getGasRaw());
+        }
+
+        @Override
+        public BigInteger getGasPrice() {
+            return new BigInteger(getGasPriceRaw());
+        }
+
+        @Override
+        public BigInteger getNonce() {
+            return new BigInteger(getNonceRaw());
+        }
+
+        @Override
+
+        public BigInteger getTransactionIndex() {
+            return new BigInteger(getTransactionIndexRaw());
+        }
+
+        @Override
+
+
+        public BigInteger getValue() {
+            return new BigInteger(getValueRaw());
+        }
+
 
     }
 

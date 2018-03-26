@@ -1,7 +1,5 @@
 package com.coinwallet.common.web3j.utils;
 
-import com.coinwallet.common.web3j.bean.TransactionVerificationInfo;
-import com.coinwallet.common.web3j.transaction.OWalletTransaction;
 import org.web3j.protocol.core.methods.response.TransactionReceipt;
 
 import java.io.IOException;
@@ -17,27 +15,26 @@ public class CommonUtils {
 
     static String test_OCoin = "0x44c93945Be58d30D89643ECdeC1e3C8005cd2413";
 
-    public static void main(String[] arg) throws IOException {
 
-        TransactionVerificationInfo transactionVerificationInfo = OWalletTransaction.verifyTransaction(txHash_1);
-        System.out.println("status" + transactionVerificationInfo.isVerification());
-        System.out.println("status" + transactionVerificationInfo.getGasUsed().toString());
-
-    }
-
-    public static String getSTAmount(String input) {
+    public static BigDecimal getSTAmount(String input) {
         if (input.startsWith("0x")) {
             input = input.replace("0x", "");
         }
         String hexAmount = input.substring(input.length() - 64, input.length());
         BigDecimal amount = new BigDecimal(new BigInteger(hexAmount, 16).toString());
         BigDecimal bigDecimal = amount.divide(new BigDecimal(1000000000000000000d), 18, BigDecimal.ROUND_UP);
-        return bigDecimal.toString();
+        return bigDecimal;
     }
 
     public static String getContractAddressTo(String input) {
-        if (input == null || "".equals(input)) return null;
-        return "0x" + input.substring(34, input.length() - 64);
+        if (input == null || "".equals(input) || input.length() != 138) return null;
+        String addressTo = "";
+        try {
+            addressTo = "0x" + input.substring(34, input.length() - 64);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return addressTo;
     }
 
 

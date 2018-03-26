@@ -1,65 +1,43 @@
 package com.coinwallet.rechage.rabbit;
 
 import com.alibaba.fastjson.JSON;
-import com.coinwallet.common.web3j.response.TransactionsResponse;
-import com.coinwallet.rechage.dao.UserCoinBalanceMapper;
-import com.coinwallet.rechage.dao.UserCoinLogMapper;
-import com.coinwallet.rechage.entity.UserCoinBalance;
-import com.coinwallet.rechage.entity.UserCoinBalanceExample;
-import com.coinwallet.rechage.entity.UserCoinLog;
+import com.coinwallet.rechage.entity.*;
+import com.coinwallet.rechage.service.CheckSuccessRechargeOrderService;
+import org.slf4j.Logger;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 
 @Component
 public class CheckBalanceReceiver {
 
-    @Autowired
-    private UserCoinBalanceMapper userCoinBalanceMapper;
+    Logger logger = org.slf4j.LoggerFactory.getLogger(CheckBalanceReceiver.class);
+
 
     @Autowired
-    private UserCoinLogMapper userCoinLogMapper;
+    private CheckSuccessRechargeOrderService checkSuccessRechargeOrderService;
 
-    @RabbitListener(queues= RabbitRechargeConfig.CHECK_BALANCE_QUEUE_NAME)
+    /**
+     * 用户充值成功,修改余额,记录日志
+     * 当此用户coin_balance大于提币上限去给获取gas费用 然后提币到总账
+     * 回调第三方充值成功
+     *
+     * @param msg
+     */
+    @RabbitListener(queues = RabbitRechargeConfig.CHECK_BALANCE,containerFactory = "myConnectionFactory")
     public void coinCharge(String msg) {
         try {
-            TransactionsResponse.Result record = JSON.parseObject(msg, TransactionsResponse.Result.class);
-            UserCoinBalanceExample userCoinBalanceExample = new UserCoinBalanceExample();
-            userCoinBalanceExample.createCriteria().andCoinAddressEqualTo(record.getTransactionTo());
-            UserCoinBalance userCoinBalance = userCoinBalanceMapper.selectByExample(userCoinBalanceExample).get(0);
+            TransactionOrder transactionOrder = JSON.parseObject(msg, TransactionOrder.class);
+            checkSuccessRechargeOrderService.checkRechargeOrder(transactionOrder);
 
-            UserCoinLog userCoinLog = new UserCoinLog();
-            createUserCoinLog(record, userCoinBalance, userCoinLog,RabbitRechargeConfig.USER_COIN_RECHARGE);
-            userCoinBalance.setCoinBalance(record.getTransactionAmount());
-            userCoinBalance.setShowBalance(record.getTransactionAmount());
-            userCoinBalanceMapper.updateByPrimaryKeySelective(userCoinBalance);
-
-            if (RabbitRechargeConfig.CHECK_PERSONAGE_AMOUNT_UP.compareTo(record.getTransactionAmount())<0){
-                //todo
-                createUserCoinLog(record, userCoinBalance, userCoinLog,RabbitRechargeConfig.USER_COIN_COLLECT);
-            }
-
-        }catch (Exception e){
-
+        } catch (Exception e) {
+            logger.error(e.getMessage(),e);
         }
 
     }
 
-    /**
-     *  record user coin log
-     * @param record
-     * @param userCoinBalance
-     * @param userCoinLog
-     * @param chargeType
-     */
-    private void createUserCoinLog(TransactionsResponse.Result record, UserCoinBalance userCoinBalance, UserCoinLog userCoinLog, Integer chargeType) {
-        userCoinLog.setChangeNum(record.getTransactionAmount());
-        userCoinLog.setChangeType(chargeType);
-        userCoinLog.setMerchantId(userCoinBalance.getMerchantId());
-        userCoinLog.setUserid(userCoinBalance.getUserid());
-        userCoinLogMapper.insertSelective(userCoinLog);
-    }
+
+
 
 }

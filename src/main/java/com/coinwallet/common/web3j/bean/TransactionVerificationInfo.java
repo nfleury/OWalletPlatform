@@ -7,9 +7,9 @@ import java.math.BigDecimal;
  */
 public class TransactionVerificationInfo {
 
-    boolean isVerification;
+    Boolean isVerification;
 
-    long timeStamp;
+    Long timeStamp;
 
     BigDecimal gasUsed;
 
@@ -29,15 +29,15 @@ public class TransactionVerificationInfo {
         return gasUsed;
     }
 
-    public long getTimeStamp() {
+    public Long getTimeStamp() {
         return timeStamp;
     }
 
-    public boolean isVerification() {
+    public Boolean isVerification() {
         return isVerification;
     }
 
-    public void setVerification(boolean verification) {
+    public void setVerification(Boolean verification) {
         isVerification = verification;
     }
 }

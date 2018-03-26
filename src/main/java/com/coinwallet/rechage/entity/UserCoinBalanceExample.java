@@ -2,6 +2,7 @@ package com.coinwallet.rechage.entity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserCoinBalanceExample {
@@ -103,6 +104,66 @@ public class UserCoinBalanceExample {
                 throw new RuntimeException("Between values for " + property + " cannot be null");
             }
             criteria.add(new Criterion(condition, value1, value2));
+        }
+
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
         }
 
         public Criteria andUseridIsNull() {
@@ -225,6 +286,66 @@ public class UserCoinBalanceExample {
             return (Criteria) this;
         }
 
+        public Criteria andCoinIdIsNull() {
+            addCriterion("coin_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdIsNotNull() {
+            addCriterion("coin_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdEqualTo(Integer value) {
+            addCriterion("coin_id =", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdNotEqualTo(Integer value) {
+            addCriterion("coin_id <>", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdGreaterThan(Integer value) {
+            addCriterion("coin_id >", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("coin_id >=", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdLessThan(Integer value) {
+            addCriterion("coin_id <", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdLessThanOrEqualTo(Integer value) {
+            addCriterion("coin_id <=", value, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdIn(List<Integer> values) {
+            addCriterion("coin_id in", values, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdNotIn(List<Integer> values) {
+            addCriterion("coin_id not in", values, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdBetween(Integer value1, Integer value2) {
+            addCriterion("coin_id between", value1, value2, "coinId");
+            return (Criteria) this;
+        }
+
+        public Criteria andCoinIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("coin_id not between", value1, value2, "coinId");
+            return (Criteria) this;
+        }
+
         public Criteria andCoinNameIsNull() {
             addCriterion("coin_name is null");
             return (Criteria) this;
@@ -292,146 +413,6 @@ public class UserCoinBalanceExample {
 
         public Criteria andCoinNameNotBetween(String value1, String value2) {
             addCriterion("coin_name not between", value1, value2, "coinName");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressIsNull() {
-            addCriterion("coin_address is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressIsNotNull() {
-            addCriterion("coin_address is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressEqualTo(String value) {
-            addCriterion("coin_address =", value, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressNotEqualTo(String value) {
-            addCriterion("coin_address <>", value, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressGreaterThan(String value) {
-            addCriterion("coin_address >", value, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressGreaterThanOrEqualTo(String value) {
-            addCriterion("coin_address >=", value, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressLessThan(String value) {
-            addCriterion("coin_address <", value, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressLessThanOrEqualTo(String value) {
-            addCriterion("coin_address <=", value, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressLike(String value) {
-            addCriterion("coin_address like", value, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressNotLike(String value) {
-            addCriterion("coin_address not like", value, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressIn(List<String> values) {
-            addCriterion("coin_address in", values, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressNotIn(List<String> values) {
-            addCriterion("coin_address not in", values, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressBetween(String value1, String value2) {
-            addCriterion("coin_address between", value1, value2, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andCoinAddressNotBetween(String value1, String value2) {
-            addCriterion("coin_address not between", value1, value2, "coinAddress");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyIsNull() {
-            addCriterion("privatekey is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyIsNotNull() {
-            addCriterion("privatekey is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyEqualTo(String value) {
-            addCriterion("privatekey =", value, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyNotEqualTo(String value) {
-            addCriterion("privatekey <>", value, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyGreaterThan(String value) {
-            addCriterion("privatekey >", value, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyGreaterThanOrEqualTo(String value) {
-            addCriterion("privatekey >=", value, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyLessThan(String value) {
-            addCriterion("privatekey <", value, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyLessThanOrEqualTo(String value) {
-            addCriterion("privatekey <=", value, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyLike(String value) {
-            addCriterion("privatekey like", value, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyNotLike(String value) {
-            addCriterion("privatekey not like", value, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyIn(List<String> values) {
-            addCriterion("privatekey in", values, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyNotIn(List<String> values) {
-            addCriterion("privatekey not in", values, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyBetween(String value1, String value2) {
-            addCriterion("privatekey between", value1, value2, "privatekey");
-            return (Criteria) this;
-        }
-
-        public Criteria andPrivatekeyNotBetween(String value1, String value2) {
-            addCriterion("privatekey not between", value1, value2, "privatekey");
             return (Criteria) this;
         }
 
@@ -552,6 +533,246 @@ public class UserCoinBalanceExample {
 
         public Criteria andShowBalanceNotBetween(BigDecimal value1, BigDecimal value2) {
             addCriterion("show_balance not between", value1, value2, "showBalance");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusIsNull() {
+            addCriterion("user_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusIsNotNull() {
+            addCriterion("user_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusEqualTo(Byte value) {
+            addCriterion("user_status =", value, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusNotEqualTo(Byte value) {
+            addCriterion("user_status <>", value, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusGreaterThan(Byte value) {
+            addCriterion("user_status >", value, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusGreaterThanOrEqualTo(Byte value) {
+            addCriterion("user_status >=", value, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusLessThan(Byte value) {
+            addCriterion("user_status <", value, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusLessThanOrEqualTo(Byte value) {
+            addCriterion("user_status <=", value, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusIn(List<Byte> values) {
+            addCriterion("user_status in", values, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusNotIn(List<Byte> values) {
+            addCriterion("user_status not in", values, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusBetween(Byte value1, Byte value2) {
+            addCriterion("user_status between", value1, value2, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andUserStatusNotBetween(Byte value1, Byte value2) {
+            addCriterion("user_status not between", value1, value2, "userStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeIsNull() {
+            addCriterion("last_trading_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeIsNotNull() {
+            addCriterion("last_trading_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeEqualTo(Date value) {
+            addCriterion("last_trading_time =", value, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeNotEqualTo(Date value) {
+            addCriterion("last_trading_time <>", value, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeGreaterThan(Date value) {
+            addCriterion("last_trading_time >", value, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("last_trading_time >=", value, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeLessThan(Date value) {
+            addCriterion("last_trading_time <", value, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeLessThanOrEqualTo(Date value) {
+            addCriterion("last_trading_time <=", value, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeIn(List<Date> values) {
+            addCriterion("last_trading_time in", values, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeNotIn(List<Date> values) {
+            addCriterion("last_trading_time not in", values, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeBetween(Date value1, Date value2) {
+            addCriterion("last_trading_time between", value1, value2, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastTradingTimeNotBetween(Date value1, Date value2) {
+            addCriterion("last_trading_time not between", value1, value2, "lastTradingTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusIsNull() {
+            addCriterion("transfer_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusIsNotNull() {
+            addCriterion("transfer_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusEqualTo(Byte value) {
+            addCriterion("transfer_status =", value, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusNotEqualTo(Byte value) {
+            addCriterion("transfer_status <>", value, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusGreaterThan(Byte value) {
+            addCriterion("transfer_status >", value, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusGreaterThanOrEqualTo(Byte value) {
+            addCriterion("transfer_status >=", value, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusLessThan(Byte value) {
+            addCriterion("transfer_status <", value, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusLessThanOrEqualTo(Byte value) {
+            addCriterion("transfer_status <=", value, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusIn(List<Byte> values) {
+            addCriterion("transfer_status in", values, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusNotIn(List<Byte> values) {
+            addCriterion("transfer_status not in", values, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusBetween(Byte value1, Byte value2) {
+            addCriterion("transfer_status between", value1, value2, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferStatusNotBetween(Byte value1, Byte value2) {
+            addCriterion("transfer_status not between", value1, value2, "transferStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNull() {
+            addCriterion("create_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIsNotNull() {
+            addCriterion("create_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeEqualTo(Date value) {
+            addCriterion("create_time =", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotEqualTo(Date value) {
+            addCriterion("create_time <>", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThan(Date value) {
+            addCriterion("create_time >", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("create_time >=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThan(Date value) {
+            addCriterion("create_time <", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeLessThanOrEqualTo(Date value) {
+            addCriterion("create_time <=", value, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeIn(List<Date> values) {
+            addCriterion("create_time in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotIn(List<Date> values) {
+            addCriterion("create_time not in", values, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeBetween(Date value1, Date value2) {
+            addCriterion("create_time between", value1, value2, "createTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreateTimeNotBetween(Date value1, Date value2) {
+            addCriterion("create_time not between", value1, value2, "createTime");
             return (Criteria) this;
         }
     }

@@ -84,7 +84,7 @@ public class OWalletAPI {
      * @param endBlockNumber
      * @return
      */
-    public static List<TransactionsResponse.CustomTransaction> getTransactionList(String address, String startBlockNumber, String endBlockNumber) {
+    public static List<TransactionsResponse.CustomTransaction> getTransactionList(String address, String startBlockNumber, String endBlockNumber) throws Exception {
         return OWalletTransaction.getTransactionList(address, startBlockNumber, endBlockNumber);
     }
 
@@ -95,7 +95,6 @@ public class OWalletAPI {
      * @throws IOException
      */
     public static BigInteger getRecentBlockNumber() throws IOException {
-
         return OWalletTransaction.getRecentBlockNumber();
     }
 

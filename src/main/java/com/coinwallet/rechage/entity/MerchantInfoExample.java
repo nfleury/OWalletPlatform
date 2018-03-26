@@ -1,6 +1,7 @@
 package com.coinwallet.rechage.entity;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MerchantInfoExample {
@@ -371,6 +372,386 @@ public class MerchantInfoExample {
 
         public Criteria andSecurityNotBetween(String value1, String value2) {
             addCriterion("security not between", value1, value2, "security");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtIsNull() {
+            addCriterion("updated_at is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtIsNotNull() {
+            addCriterion("updated_at is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtEqualTo(Date value) {
+            addCriterion("updated_at =", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtNotEqualTo(Date value) {
+            addCriterion("updated_at <>", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtGreaterThan(Date value) {
+            addCriterion("updated_at >", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtGreaterThanOrEqualTo(Date value) {
+            addCriterion("updated_at >=", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtLessThan(Date value) {
+            addCriterion("updated_at <", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtLessThanOrEqualTo(Date value) {
+            addCriterion("updated_at <=", value, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtIn(List<Date> values) {
+            addCriterion("updated_at in", values, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtNotIn(List<Date> values) {
+            addCriterion("updated_at not in", values, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtBetween(Date value1, Date value2) {
+            addCriterion("updated_at between", value1, value2, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedAtNotBetween(Date value1, Date value2) {
+            addCriterion("updated_at not between", value1, value2, "updatedAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByIsNull() {
+            addCriterion("updated_by is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByIsNotNull() {
+            addCriterion("updated_by is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByEqualTo(Integer value) {
+            addCriterion("updated_by =", value, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByNotEqualTo(Integer value) {
+            addCriterion("updated_by <>", value, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByGreaterThan(Integer value) {
+            addCriterion("updated_by >", value, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByGreaterThanOrEqualTo(Integer value) {
+            addCriterion("updated_by >=", value, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByLessThan(Integer value) {
+            addCriterion("updated_by <", value, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByLessThanOrEqualTo(Integer value) {
+            addCriterion("updated_by <=", value, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByIn(List<Integer> values) {
+            addCriterion("updated_by in", values, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByNotIn(List<Integer> values) {
+            addCriterion("updated_by not in", values, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByBetween(Integer value1, Integer value2) {
+            addCriterion("updated_by between", value1, value2, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedByNotBetween(Integer value1, Integer value2) {
+            addCriterion("updated_by not between", value1, value2, "updatedBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIsNull() {
+            addCriterion("created_at is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIsNotNull() {
+            addCriterion("created_at is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtEqualTo(Date value) {
+            addCriterion("created_at =", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotEqualTo(Date value) {
+            addCriterion("created_at <>", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtGreaterThan(Date value) {
+            addCriterion("created_at >", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtGreaterThanOrEqualTo(Date value) {
+            addCriterion("created_at >=", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtLessThan(Date value) {
+            addCriterion("created_at <", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtLessThanOrEqualTo(Date value) {
+            addCriterion("created_at <=", value, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtIn(List<Date> values) {
+            addCriterion("created_at in", values, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotIn(List<Date> values) {
+            addCriterion("created_at not in", values, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtBetween(Date value1, Date value2) {
+            addCriterion("created_at between", value1, value2, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedAtNotBetween(Date value1, Date value2) {
+            addCriterion("created_at not between", value1, value2, "createdAt");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByIsNull() {
+            addCriterion("created_by is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByIsNotNull() {
+            addCriterion("created_by is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByEqualTo(Integer value) {
+            addCriterion("created_by =", value, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByNotEqualTo(Integer value) {
+            addCriterion("created_by <>", value, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByGreaterThan(Integer value) {
+            addCriterion("created_by >", value, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByGreaterThanOrEqualTo(Integer value) {
+            addCriterion("created_by >=", value, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByLessThan(Integer value) {
+            addCriterion("created_by <", value, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByLessThanOrEqualTo(Integer value) {
+            addCriterion("created_by <=", value, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByIn(List<Integer> values) {
+            addCriterion("created_by in", values, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByNotIn(List<Integer> values) {
+            addCriterion("created_by not in", values, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByBetween(Integer value1, Integer value2) {
+            addCriterion("created_by between", value1, value2, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andCreatedByNotBetween(Integer value1, Integer value2) {
+            addCriterion("created_by not between", value1, value2, "createdBy");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlIsNull() {
+            addCriterion("recharge_success_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlIsNotNull() {
+            addCriterion("recharge_success_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlEqualTo(String value) {
+            addCriterion("recharge_success_url =", value, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlNotEqualTo(String value) {
+            addCriterion("recharge_success_url <>", value, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlGreaterThan(String value) {
+            addCriterion("recharge_success_url >", value, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("recharge_success_url >=", value, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlLessThan(String value) {
+            addCriterion("recharge_success_url <", value, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlLessThanOrEqualTo(String value) {
+            addCriterion("recharge_success_url <=", value, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlLike(String value) {
+            addCriterion("recharge_success_url like", value, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlNotLike(String value) {
+            addCriterion("recharge_success_url not like", value, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlIn(List<String> values) {
+            addCriterion("recharge_success_url in", values, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlNotIn(List<String> values) {
+            addCriterion("recharge_success_url not in", values, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlBetween(String value1, String value2) {
+            addCriterion("recharge_success_url between", value1, value2, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andRechargeSuccessUrlNotBetween(String value1, String value2) {
+            addCriterion("recharge_success_url not between", value1, value2, "rechargeSuccessUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlIsNull() {
+            addCriterion("transfer_call_back_url is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlIsNotNull() {
+            addCriterion("transfer_call_back_url is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlEqualTo(String value) {
+            addCriterion("transfer_call_back_url =", value, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlNotEqualTo(String value) {
+            addCriterion("transfer_call_back_url <>", value, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlGreaterThan(String value) {
+            addCriterion("transfer_call_back_url >", value, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlGreaterThanOrEqualTo(String value) {
+            addCriterion("transfer_call_back_url >=", value, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlLessThan(String value) {
+            addCriterion("transfer_call_back_url <", value, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlLessThanOrEqualTo(String value) {
+            addCriterion("transfer_call_back_url <=", value, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlLike(String value) {
+            addCriterion("transfer_call_back_url like", value, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlNotLike(String value) {
+            addCriterion("transfer_call_back_url not like", value, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlIn(List<String> values) {
+            addCriterion("transfer_call_back_url in", values, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlNotIn(List<String> values) {
+            addCriterion("transfer_call_back_url not in", values, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlBetween(String value1, String value2) {
+            addCriterion("transfer_call_back_url between", value1, value2, "transferCallBackUrl");
+            return (Criteria) this;
+        }
+
+        public Criteria andTransferCallBackUrlNotBetween(String value1, String value2) {
+            addCriterion("transfer_call_back_url not between", value1, value2, "transferCallBackUrl");
             return (Criteria) this;
         }
     }

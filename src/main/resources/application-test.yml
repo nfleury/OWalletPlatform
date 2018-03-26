@@ -3,11 +3,20 @@ server:
 spring:
   application:
     name: coin-wallet
+  rabbitmq:
+      host: 172.31.4.104
+      port: 5672
+      username: adminw
+      password: admin345
+  redis:
+      host: 172.31.4.104
+      port: 7865
+      password: LnK#@UioRT2
   datasource:
       driver-class-name: com.mysql.jdbc.Driver
-      url: jdbc:mysql://139.129.246.185:3306/coin_wallet?useUnicode=true&characterEncoding=utf-8&useSSL=false
+      url: jdbc:mysql://172.31.4.104:3306/coin_wallet?useUnicode=true&characterEncoding=utf-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&maxReconnects=10
       username: root
-      password: bamcdx123.
+      password: BAMCDX123.
       type: com.alibaba.druid.pool.DruidDataSource
       filters: stat
       maxActive: 20
@@ -23,8 +32,8 @@ spring:
       poolPreparedStatements: true
       maxPoolPreparedStatementPerConnectionSize: 20
 mybatis:
-  config-location: classpath:mybatis-config.xml
-  mapper-locations: classpath*:com/coinwallet/**/mapper/*.xml # mapper文件扫描
+   config-location: classpath:mybatis-config.xml
+   mapper-locations: classpath*:com/coinwallet/**/mapper/*.xml # mapper文件扫描
 
 
 

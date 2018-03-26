@@ -6,6 +6,10 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface MerchantInfoMapper {
+    int countByExample(MerchantInfoExample example);
+
+    int deleteByExample(MerchantInfoExample example);
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(MerchantInfo record);

@@ -27,8 +27,6 @@ public class RequestUtils {
 
 
     public static String sendGet(String url) {
-        System.out.println();
-        System.out.println("get:url:" + url);
         String result = "";
         BufferedReader in = null;
         try {
@@ -57,7 +55,6 @@ public class RequestUtils {
                 result += "/n" + line;
             }
         } catch (Exception e) {
-            System.out.println("发送GET请求出现异常！" + e);
             e.printStackTrace();
         }
 

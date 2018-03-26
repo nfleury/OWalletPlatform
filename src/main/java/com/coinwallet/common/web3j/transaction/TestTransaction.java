@@ -9,9 +9,9 @@ import org.web3j.crypto.Credentials;
 import org.web3j.crypto.WalletUtils;
 import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
+import org.web3j.protocol.core.methods.response.EthBlockNumber;
 import org.web3j.protocol.core.methods.response.EthEstimateGas;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
-import org.web3j.protocol.core.methods.response.EthGetTransactionReceipt;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -24,18 +24,18 @@ public class TestTransaction {
 
 
     static String testPrivateContra = "0x44c93945Be58d30D89643ECdeC1e3C8005cd2413";
-    static String path1 = "/Users/y/Desktop/keystore";
-    static String path2 = "/Users/y/Desktop/keystore_2";
-    static String path3 = "/Users/y/Desktop/keystore_3";
+    static String path1 = "C:/Users/liuhuan/Desktop/keystore";
+    static String path2 = "C:/Users/liuhuan/Desktop/keystore_2";
+    static String path3 = "C:/Users/liuhuan/Desktop/keystore_3";
 
     static String Acount1 = "";
     static String Acount_2 = "0xe6F637D4d98CFD1E43c4C66F6CE5a7C6d5C8D364";
     static String testWalletAddr = "0xFa7C12466Bfcb1a702ca9Bc6715BC5964452466c";
     static String test_TxHash_main = "0xb4db3a8557ad4d69e4fa58f7d0967d52bec17850bbeaad39318951c689f10a24";
 
-    public static void main(String[] arg) throws IOException, CipherException {
+    public static void main(String[] arg) throws Exception{
 
-        testVerifyTransactionOnNode();
+        test();
 
     }
 
@@ -85,8 +85,10 @@ public class TestTransaction {
 
         BigDecimal needGas = CommonUtils.bit18(contractTransactionGasLimit.multiply(gasPrice));
 
+        System.out.println("needGas:"+needGas);
+
         String txHash = TransactionOnNode.transactionEth(web3j, credentials2.getEcKeyPair(), needGas.toPlainString(), credentials3.getAddress(), gasPrice.toString(), ethTransactionGasLimit.toString(), "");
-        System.out.println("txHash" + txHash);
+        System.out.println("txHash:" + txHash);
 //        TransactionVerificationInfo transactionVerificationInfo = TransactionOnNode.verifyTransaction(txHash);
 
         //4  confirm 3 transaction
@@ -97,7 +99,7 @@ public class TestTransaction {
 //            transactionVerificationInfo = TransactionOnNode.verifyTransaction(txHash);
 //        }
 
-        Thread.sleep(30000);
+//        Thread.sleep(30000);
 
         //5 user wallet to  master wallet
         System.out.println(" 5 user wallet to  master wallet");
@@ -105,6 +107,8 @@ public class TestTransaction {
 
         BigDecimal userWallet_OCN = TransactionOnNode.balanceOfContractToken(web3j, testPrivateContra, credentials3.getAddress());
         BigDecimal userWallet_ETH = TransactionOnNode.balanceOfETH(web3j, credentials3.getAddress());
+        System.out.println(userWallet_OCN);
+        System.out.println(userWallet_ETH);
 
         System.out.println("userWallet_OCN" + userWallet_OCN);
         System.out.println("userWallet_ETH" + userWallet_ETH);
@@ -139,7 +143,9 @@ public class TestTransaction {
 
     public static void test() throws IOException {
         Web3j web3j = Web3j.build(new CustomNodeService());
-        EthGetTransactionReceipt send = web3j.ethGetTransactionReceipt("0x24ceacad8f754927f5e84f44550f2d8209dcc28923ffd39557e4eb61503de6e2").send();
+        EthBlockNumber send1 = web3j.ethBlockNumber().send();
+        System.out.println("tt"+send1.getBlockNumber());
+//        EthGetTransactionReceipt send = web3j.ethGetTransactionReceipt("0x0d612fa2308c0e53d49887512f4f26d5f79ba4c5478094e473f6d008688d5381").send();
 //        send.ge
     }
 

@@ -1,74 +1,103 @@
 package com.coinwallet.rechage.schedule;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.coinwallet.common.web3j.response.TransactionsResponse;
-import com.coinwallet.rechage.dao.UserCoinBalanceMapper;
-import com.coinwallet.rechage.dao.UserCoinLogMapper;
-import com.coinwallet.rechage.entity.UserCoinBalance;
-import com.coinwallet.rechage.entity.UserCoinLog;
-import com.coinwallet.rechage.rabbit.RabbitRechargeConfig;
+import com.coinwallet.common.util.Constants;
+import com.coinwallet.common.web3j.bean.TransactionVerificationInfo;
+import com.coinwallet.common.web3j.transaction.OWalletTransaction;
+import com.coinwallet.common.web3j.transaction.TransactionOnNode;
+import com.coinwallet.rechage.dao.CoinInfoMapper;
+import com.coinwallet.rechage.dao.GasTransactionLogMapper;
+import com.coinwallet.rechage.dao.TransactionOrderMapper;
+import com.coinwallet.rechage.entity.*;
+import com.coinwallet.rechage.service.CheckRechargeOrderOnNodeService;
+import com.coinwallet.rechage.service.CheckRechargeOrderOnScanService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class CheckBalanceTask {
 
-    @Autowired
-    private UserCoinBalanceMapper userCoinBalanceMapper;
 
     @Autowired
-    private UserCoinLogMapper userCoinLogMapper;
+    private CoinInfoMapper coinInfoMapper;
+    @Autowired
+    private CheckRechargeOrderOnScanService checkRechargeOrderOnScanService;
 
     @Autowired
-    RabbitTemplate rabbitTemplate;
+    private TransactionOrderMapper transactionOrderMapper;
+    @Autowired
+    private CheckRechargeOrderOnNodeService checkRechargeOrderOnNodeService;
+
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
 
-    public void checkBalance() {
+    @Autowired
+    private GasTransactionLogMapper gasTransactionLogMapper;
 
-    }
+    protected Logger logger = LoggerFactory.getLogger(CheckBalanceTask.class);
 
-    //@Scheduled(cron = "0 */1 * * * ?")
-    public void rechargeRecord(){
-        List<TransactionsResponse.Result> results = new ArrayList<>()   ;
-        List<String> addresses = userCoinBalanceMapper.selectUserAddress();
-        for (TransactionsResponse.Result record : results) {
-            if (addresses.contains(record.getTransactionTo())){
-                JSONObject jsonObject = (JSONObject) JSON.toJSON(record);
-                rabbitTemplate.convertAndSend(RabbitRechargeConfig.CHECK_BALANCE_QUEUE_NAME,jsonObject);
-            }
-        }
-    }
-
-    //@Scheduled(cron = "59 59 23 * * ?")
-    public void scanAccountOcoin(){
-        List<UserCoinBalance> userCoinBalances = userCoinBalanceMapper.selectAll();
-        BigDecimal allCoinBalance = new BigDecimal("0.000000000000000000");
-        for (UserCoinBalance userCoinBalance : userCoinBalances) {
-            allCoinBalance.add(userCoinBalance.getCoinBalance());
-        }
-        if (allCoinBalance.compareTo(RabbitRechargeConfig.CHECK_ALL_AMOUNT_UP)>0){
-            userCoinBalances.forEach(r -> {
-                if (RabbitRechargeConfig.CHECK_PERSONAGE_AMOUNT_UP.compareTo(r.getCoinBalance())>0
-                        &&new BigDecimal("0").compareTo(r.getCoinBalance())<0){
-                    //todo tran
-
-                    UserCoinLog userCoinLog = new UserCoinLog();
-                    userCoinLog.setChangeNum(r.getCoinBalance());
-                    userCoinLog.setChangeType(RabbitRechargeConfig.USER_COIN_COLLECT);
-                    userCoinLog.setMerchantId(r.getMerchantId());
-                    userCoinLog.setUserid(r.getUserid());
-                    userCoinLogMapper.insertSelective(userCoinLog);
+    /**
+     * 定时任务走节点检测所有处于peeding中的订单(每次三十条)
+     * 类型1：用户充值成功,修改用户余额,记录充值日志
+     * 类型2：给用户用户充值gas成功,提币到总账,记录给用户充值gas日志
+     * 类型3：提币到总账成功,记录给用户提币日志
+     */
+    @Scheduled(cron = "0 */1 * * * ?")
+    public void checkOrderStausFromNode() {
+        List<TransactionOrder> transactionOrders = transactionOrderMapper.selectUnConfirmOrder(Constants.NODE_UNCONFIRM_ROW);
+        if (transactionOrders != null) {
+            for (TransactionOrder transactionOrder : transactionOrders) {
+                try {
+                    TransactionVerificationInfo verificationInfo = TransactionOnNode.verifyTransaction(transactionOrder.getTxHash());
+                    checkRechargeOrderOnNodeService.confirmOrder(transactionOrder, verificationInfo);
+                } catch (Exception e) {
+                    logger.error(e.getMessage(),e);
                 }
-            });
+
+            }
+
         }
+
 
     }
 
+    /**
+     * 定时任务走scan检测所有处于peeding中的订单(每次检测10条)
+     * 类型1：用户充值成功,修改用户余额,记录充值日志
+     * 类型2：给用户用户充值gas成功,提币到总账,记录给用户充值gas日志
+     * 类型3：提币到总账成功,记录给用户提币日志
+     */
+    @Scheduled(cron = "0 */20 * * * ?")
+    public void checkOrderStausFromScan() {
+        List<TransactionOrder> transactionOrders = transactionOrderMapper.selectUnConfirmOrder(Constants.SCAN_UNCONFIRM_ROW);
+        if (transactionOrders != null) {
+            for (TransactionOrder transactionOrder : transactionOrders) {
+                try {
+                    TransactionVerificationInfo verificationInfo = OWalletTransaction.verifyTransaction(transactionOrder.getTxHash());
+                    checkRechargeOrderOnNodeService.confirmOrder(transactionOrder, verificationInfo);
+                } catch (Exception e) {
+                    logger.error(e.getMessage(),e);
+                }
+
+            }
+
+        }
+
+
+    }
+
+
+    /**
+     * 从最近扫的一个区块号到最新区块号减去12 扫描区块之间的记录
+     */
+    @Scheduled(cron = "0 */5 * * * ?")
+    public void scanBlockTranscation() {
+        checkRechargeOrderOnScanService.scanBlockTranscation();
+    }
 }

@@ -210,4 +210,15 @@ public class DateUtils {
         DateFormat df = new SimpleDateFormat("dd MMM", Locale.ENGLISH);
         return df.format(date);
     }
+
+    /**
+     * unix时间戳转换成yMdHmsDatePattern
+     * @param timeStamp
+     * @return
+     */
+    public static Date TimeStamp2Date(Long timeStamp) throws ParseException {
+        Long longTime = timeStamp * 1000;
+        String date = new SimpleDateFormat(yMdHmsDatePattern).format(new Date(longTime));
+        return parse(date,yMdHmsDatePattern);
+    }
 }

@@ -2,12 +2,15 @@ package com.coinwallet.rechage.dao;
 
 import com.coinwallet.rechage.entity.UserCoinBalance;
 import com.coinwallet.rechage.entity.UserCoinBalanceExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
-
 public interface UserCoinBalanceMapper {
-    int deleteByPrimaryKey(Integer userid);
+    int countByExample(UserCoinBalanceExample example);
+
+    int deleteByExample(UserCoinBalanceExample example);
+
+    int deleteByPrimaryKey(Integer id);
 
     int insert(UserCoinBalance record);
 
@@ -15,7 +18,7 @@ public interface UserCoinBalanceMapper {
 
     List<UserCoinBalance> selectByExample(UserCoinBalanceExample example);
 
-    UserCoinBalance selectByPrimaryKey(Integer userid);
+    UserCoinBalance selectByPrimaryKey(Integer id);
 
     int updateByExampleSelective(@Param("record") UserCoinBalance record, @Param("example") UserCoinBalanceExample example);
 
@@ -25,7 +28,6 @@ public interface UserCoinBalanceMapper {
 
     int updateByPrimaryKey(UserCoinBalance record);
 
-    List<String> selectUserAddress();
+    UserCoinBalance selectByUserIdAndMerchantInfoId(@Param("userId")Integer userId,@Param("merchantInfoId") Integer merchantInfoId);
 
-    List<UserCoinBalance> selectAll();
 }

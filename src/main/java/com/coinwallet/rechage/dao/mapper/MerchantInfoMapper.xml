@@ -6,6 +6,12 @@
     <result column="merchant_name" property="merchantName" jdbcType="VARCHAR" />
     <result column="apikey" property="apikey" jdbcType="VARCHAR" />
     <result column="security" property="security" jdbcType="VARCHAR" />
+    <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP" />
+    <result column="updated_by" property="updatedBy" jdbcType="INTEGER" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+    <result column="created_by" property="createdBy" jdbcType="INTEGER" />
+    <result column="recharge_success_url" property="rechargeSuccessUrl" jdbcType="VARCHAR" />
+    <result column="transfer_call_back_url" property="transferCallBackUrl" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -66,14 +72,15 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, merchant_name, apikey, security
+    id, merchant_name, apikey, security, updated_at, updated_by, created_at, created_by, 
+    recharge_success_url, transfer_call_back_url
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.coinwallet.rechage.entity.MerchantInfoExample" >
     select
     <if test="distinct" >
       distinct
     </if>
-    'false' as QUERYID,
+    'true' as QUERYID,
     <include refid="Base_Column_List" />
     from merchant_info
     <if test="_parameter != null" >
@@ -93,11 +100,21 @@
     delete from merchant_info
     where id = #{id,jdbcType=INTEGER}
   </delete>
+  <delete id="deleteByExample" parameterType="com.coinwallet.rechage.entity.MerchantInfoExample" >
+    delete from merchant_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.coinwallet.rechage.entity.MerchantInfo" >
     insert into merchant_info (id, merchant_name, apikey, 
-      security)
+      security, updated_at, updated_by, 
+      created_at, created_by, recharge_success_url, 
+      transfer_call_back_url)
     values (#{id,jdbcType=INTEGER}, #{merchantName,jdbcType=VARCHAR}, #{apikey,jdbcType=VARCHAR}, 
-      #{security,jdbcType=VARCHAR})
+      #{security,jdbcType=VARCHAR}, #{updatedAt,jdbcType=TIMESTAMP}, #{updatedBy,jdbcType=INTEGER}, 
+      #{createdAt,jdbcType=TIMESTAMP}, #{createdBy,jdbcType=INTEGER}, #{rechargeSuccessUrl,jdbcType=VARCHAR}, 
+      #{transferCallBackUrl,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.coinwallet.rechage.entity.MerchantInfo" >
     insert into merchant_info
@@ -114,6 +131,24 @@
       <if test="security != null" >
         security,
       </if>
+      <if test="updatedAt != null" >
+        updated_at,
+      </if>
+      <if test="updatedBy != null" >
+        updated_by,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+      <if test="createdBy != null" >
+        created_by,
+      </if>
+      <if test="rechargeSuccessUrl != null" >
+        recharge_success_url,
+      </if>
+      <if test="transferCallBackUrl != null" >
+        transfer_call_back_url,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
@@ -128,8 +163,32 @@
       <if test="security != null" >
         #{security,jdbcType=VARCHAR},
       </if>
+      <if test="updatedAt != null" >
+        #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        #{updatedBy,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        #{createdBy,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeSuccessUrl != null" >
+        #{rechargeSuccessUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="transferCallBackUrl != null" >
+        #{transferCallBackUrl,jdbcType=VARCHAR},
+      </if>
     </trim>
   </insert>
+  <select id="countByExample" parameterType="com.coinwallet.rechage.entity.MerchantInfoExample" resultType="java.lang.Integer" >
+    select count(*) from merchant_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
   <update id="updateByExampleSelective" parameterType="map" >
     update merchant_info
     <set >
@@ -145,6 +204,24 @@
       <if test="record.security != null" >
         security = #{record.security,jdbcType=VARCHAR},
       </if>
+      <if test="record.updatedAt != null" >
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updatedBy != null" >
+        updated_by = #{record.updatedBy,jdbcType=INTEGER},
+      </if>
+      <if test="record.createdAt != null" >
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createdBy != null" >
+        created_by = #{record.createdBy,jdbcType=INTEGER},
+      </if>
+      <if test="record.rechargeSuccessUrl != null" >
+        recharge_success_url = #{record.rechargeSuccessUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.transferCallBackUrl != null" >
+        transfer_call_back_url = #{record.transferCallBackUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
@@ -155,7 +232,13 @@
     set id = #{record.id,jdbcType=INTEGER},
       merchant_name = #{record.merchantName,jdbcType=VARCHAR},
       apikey = #{record.apikey,jdbcType=VARCHAR},
-      security = #{record.security,jdbcType=VARCHAR}
+      security = #{record.security,jdbcType=VARCHAR},
+      updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{record.updatedBy,jdbcType=INTEGER},
+      created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+      created_by = #{record.createdBy,jdbcType=INTEGER},
+      recharge_success_url = #{record.rechargeSuccessUrl,jdbcType=VARCHAR},
+      transfer_call_back_url = #{record.transferCallBackUrl,jdbcType=VARCHAR}
     <if test="_parameter != null" >
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -172,6 +255,24 @@
       <if test="security != null" >
         security = #{security,jdbcType=VARCHAR},
       </if>
+      <if test="updatedAt != null" >
+        updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updatedBy != null" >
+        updated_by = #{updatedBy,jdbcType=INTEGER},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createdBy != null" >
+        created_by = #{createdBy,jdbcType=INTEGER},
+      </if>
+      <if test="rechargeSuccessUrl != null" >
+        recharge_success_url = #{rechargeSuccessUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="transferCallBackUrl != null" >
+        transfer_call_back_url = #{transferCallBackUrl,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -179,7 +280,13 @@
     update merchant_info
     set merchant_name = #{merchantName,jdbcType=VARCHAR},
       apikey = #{apikey,jdbcType=VARCHAR},
-      security = #{security,jdbcType=VARCHAR}
+      security = #{security,jdbcType=VARCHAR},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      updated_by = #{updatedBy,jdbcType=INTEGER},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      created_by = #{createdBy,jdbcType=INTEGER},
+      recharge_success_url = #{rechargeSuccessUrl,jdbcType=VARCHAR},
+      transfer_call_back_url = #{transferCallBackUrl,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>
