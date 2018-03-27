@@ -26,7 +26,6 @@ RechargeGasToUserAccountReceiver {
     public void rechargeToGeneralLedger(String msg) {
         try {
             logger.info("开始打邮费" + msg);
-
             TransactionMsg transactionMsg = JSON.parseObject(msg, TransactionMsg.class);
             UserCoinBalance userCoinBalance = transactionMsg.getUserCoinBalance();
             UserWalletInfo userWalletInfo = transactionMsg.getUserWalletInfo();

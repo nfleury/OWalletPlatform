@@ -64,7 +64,9 @@ public class CheckRechargeOrderOnScanService {
      */
     public void scanBlockTranscation() {
         //获得需要扫描代币列表
-        List<CoinInfo> coinInfos = coinInfoMapper.selectByExample(new CoinInfoExample());
+        CoinInfoExample infoExample = new CoinInfoExample();
+        infoExample.or().andContractAddressIsNotNull();
+        List<CoinInfo> coinInfos = coinInfoMapper.selectByExample(infoExample);
         ScheduleBlockNumExample scheduleBlockNumExample = new ScheduleBlockNumExample();
         //执行扫币操作
         for (CoinInfo coinInfo : coinInfos) {
@@ -116,9 +118,9 @@ public class CheckRechargeOrderOnScanService {
             for (TransactionsResponse.CustomTransaction transaction : scanBlockInfo.getTransactionList()) {
                 String toAddress = CommonUtils.getContractAddressTo(transaction.getInput());
                 UserWalletInfo userWalletInfo = userWalletInfoMapper.selectWalletInfoByAddress(toAddress);
-                logger.warn(toAddress);
+                //  logger.warn(toAddress);
                 if (userWalletInfo != null) {
-                    TransactionOrder transactionOrder = transactionOrderMapper.selectByPrimaryKey(transaction.getHash());
+                    TransactionOrder transactionOrder = transactionOrderMapper.selectByTxHash(transaction.getHash());
                     if (transactionOrder != null) {
                         if (Constants.ORDER_STATUS_PEEDING == transactionOrder.getOrderStatus()) {
                             setTrandTimeAndFee(transaction, transactionOrder);

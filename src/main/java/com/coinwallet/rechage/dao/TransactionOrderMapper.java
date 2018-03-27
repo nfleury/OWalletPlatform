@@ -2,11 +2,17 @@ package com.coinwallet.rechage.dao;
 
 import com.coinwallet.rechage.entity.TransactionOrder;
 import com.coinwallet.rechage.entity.TransactionOrderExample;
+
 import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
 public interface TransactionOrderMapper {
-    int deleteByPrimaryKey(String txHash);
+    int countByExample(TransactionOrderExample example);
+
+    int deleteByExample(TransactionOrderExample example);
+
+    int deleteByPrimaryKey(Integer id);
 
     int insert(TransactionOrder record);
 
@@ -14,7 +20,9 @@ public interface TransactionOrderMapper {
 
     List<TransactionOrder> selectByExample(TransactionOrderExample example);
 
-    TransactionOrder selectByPrimaryKey(String txHash);
+    TransactionOrder selectByPrimaryKey(Integer id);
+
+    TransactionOrder selectByTxHash(String txHash);
 
     int updateByExampleSelective(@Param("record") TransactionOrder record, @Param("example") TransactionOrderExample example);
 

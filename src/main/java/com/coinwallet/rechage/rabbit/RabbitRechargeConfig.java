@@ -19,6 +19,7 @@ public class RabbitRechargeConfig {
     public static final String CHECK_NODE_RECHARGE = "check_node_recharge";//监听节点符合合约地址的去记录订单
     public static final String AFFIRM_RECHARGE_TO_GATHER = "affirm_recharge_to_gather";//确认提币成功,记录user_coin_log日志
     public static final String AFFIRM_PLATFORM_TRANSFER = "affirm_platform_transfer";//确认第三方平台转账成功
+    public static final String OPERATION_API_LOG = "operation_api_log";//确认第三方平台转账成功
 
 
     @Bean
@@ -53,8 +54,14 @@ public class RabbitRechargeConfig {
     }
 
     @Bean
-    public Queue affirmPlatformTransfer() {
+    public Queue recordOperationApiLog() {
         return new Queue(RabbitRechargeConfig.AFFIRM_PLATFORM_TRANSFER);
+    }
+
+
+    @Bean
+    public Queue affirmPlatformTransfer() {
+        return new Queue(RabbitRechargeConfig.OPERATION_API_LOG);
     }
 
     @Bean(name = "myConnectionFactory")

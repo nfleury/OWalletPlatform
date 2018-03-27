@@ -1,6 +1,5 @@
 package com.coinwallet.rechage.service;
 
-import com.coinwallet.common.config.InitConfig;
 import com.coinwallet.common.util.Constants;
 import com.coinwallet.rechage.dao.TransactionOrderMapper;
 import com.coinwallet.rechage.dao.UserCoinBalanceMapper;
@@ -37,8 +36,6 @@ public class AffirmRechargeToGatherService {
     @Autowired
     private CheckSuccessRechargeOrderService checkSuccessRechargeOrderService;
 
-    @Autowired
-    private InitConfig initConfig;
 
 
     public void affirmRechargeCoin(TransactionOrder transactionOrder) throws Exception{
@@ -62,6 +59,7 @@ public class AffirmRechargeToGatherService {
         userCoinLog.setUserid(userCoinBalance.getUserid());
         userCoinLog.setMerchantId(userCoinBalance.getMerchantId());
         userCoinLog.setChangeNum(transactionOrder.getCoinNum());
+        userCoinLog.setOrderTxHash(transactionOrder.getTxHash());
         userCoinLog.setChangeType(Constants.USER_COIN_COLLECT);
         userCoinLog.setCreateTime(new Date());
         userCoinLogMapper.insertSelective(userCoinLog);

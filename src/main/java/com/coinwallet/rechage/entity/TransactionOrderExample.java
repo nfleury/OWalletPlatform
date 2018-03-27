@@ -106,6 +106,66 @@ public class TransactionOrderExample {
             criteria.add(new Criterion(condition, value1, value2));
         }
 
+        public Criteria andIdIsNull() {
+            addCriterion("id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIsNotNull() {
+            addCriterion("id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdEqualTo(Integer value) {
+            addCriterion("id =", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotEqualTo(Integer value) {
+            addCriterion("id <>", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThan(Integer value) {
+            addCriterion("id >", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("id >=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThan(Integer value) {
+            addCriterion("id <", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdLessThanOrEqualTo(Integer value) {
+            addCriterion("id <=", value, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdIn(List<Integer> values) {
+            addCriterion("id in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotIn(List<Integer> values) {
+            addCriterion("id not in", values, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdBetween(Integer value1, Integer value2) {
+            addCriterion("id between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
+        public Criteria andIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("id not between", value1, value2, "id");
+            return (Criteria) this;
+        }
+
         public Criteria andTxHashIsNull() {
             addCriterion("tx_hash is null");
             return (Criteria) this;
@@ -983,6 +1043,126 @@ public class TransactionOrderExample {
 
         public Criteria andTranscationTypeNotBetween(Integer value1, Integer value2) {
             addCriterion("transcation_type not between", value1, value2, "transcationType");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusIsNull() {
+            addCriterion("callback_status is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusIsNotNull() {
+            addCriterion("callback_status is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusEqualTo(Integer value) {
+            addCriterion("callback_status =", value, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusNotEqualTo(Integer value) {
+            addCriterion("callback_status <>", value, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusGreaterThan(Integer value) {
+            addCriterion("callback_status >", value, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusGreaterThanOrEqualTo(Integer value) {
+            addCriterion("callback_status >=", value, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusLessThan(Integer value) {
+            addCriterion("callback_status <", value, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusLessThanOrEqualTo(Integer value) {
+            addCriterion("callback_status <=", value, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusIn(List<Integer> values) {
+            addCriterion("callback_status in", values, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusNotIn(List<Integer> values) {
+            addCriterion("callback_status not in", values, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusBetween(Integer value1, Integer value2) {
+            addCriterion("callback_status between", value1, value2, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackStatusNotBetween(Integer value1, Integer value2) {
+            addCriterion("callback_status not between", value1, value2, "callbackStatus");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeIsNull() {
+            addCriterion("callback_time is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeIsNotNull() {
+            addCriterion("callback_time is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeEqualTo(Date value) {
+            addCriterion("callback_time =", value, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeNotEqualTo(Date value) {
+            addCriterion("callback_time <>", value, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeGreaterThan(Date value) {
+            addCriterion("callback_time >", value, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeGreaterThanOrEqualTo(Date value) {
+            addCriterion("callback_time >=", value, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeLessThan(Date value) {
+            addCriterion("callback_time <", value, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeLessThanOrEqualTo(Date value) {
+            addCriterion("callback_time <=", value, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeIn(List<Date> values) {
+            addCriterion("callback_time in", values, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeNotIn(List<Date> values) {
+            addCriterion("callback_time not in", values, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeBetween(Date value1, Date value2) {
+            addCriterion("callback_time between", value1, value2, "callbackTime");
+            return (Criteria) this;
+        }
+
+        public Criteria andCallbackTimeNotBetween(Date value1, Date value2) {
+            addCriterion("callback_time not between", value1, value2, "callbackTime");
             return (Criteria) this;
         }
     }

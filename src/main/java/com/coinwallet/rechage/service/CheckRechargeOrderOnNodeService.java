@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.coinwallet.common.util.Constants;
 import com.coinwallet.common.util.DateUtils;
 import com.coinwallet.common.web3j.bean.TransactionVerificationInfo;
+import com.coinwallet.common.web3j.transaction.TransactionOnNode;
 import com.coinwallet.common.web3j.utils.CommonUtils;
 import com.coinwallet.common.web3j.utils.OWalletUtils;
 import com.coinwallet.rechage.dao.*;
 import com.coinwallet.rechage.entity.*;
 import com.coinwallet.rechage.rabbit.RabbitRechargeConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +27,8 @@ import java.util.List;
  */
 @Service
 public class CheckRechargeOrderOnNodeService {
+
+    Logger logger = LoggerFactory.getLogger(CheckRechargeOrderOnNodeService.class);
 
 
     @Autowired
@@ -46,12 +51,12 @@ public class CheckRechargeOrderOnNodeService {
     private GasTransactionLogMapper gasTransactionLogMapper;
 
 
-
     /**
      * 扫描节点获得交易信息,记录peeding状态订单
+     *
      * @param transaction
      */
-    public void checkNodeRecharge(Transaction transaction){
+    public void checkNodeRecharge(Transaction transaction) {
 
 
         String toAddress = CommonUtils.getContractAddressTo(transaction.getInput());
@@ -77,7 +82,7 @@ public class CheckRechargeOrderOnNodeService {
      * @param transcationOrder
      */
     public int insertTransacntionOrder(Transaction transaction, String toAddress, Integer transcationType, CoinInfo coinInfo, Integer orderStatus, TransactionOrder transcationOrder) {
-        TransactionOrder order = transactionOrderMapper.selectByPrimaryKey(transaction.getHash());
+        TransactionOrder order = transactionOrderMapper.selectByTxHash(transaction.getHash());
         if (order != null) {
             return 0;
         }
@@ -105,21 +110,23 @@ public class CheckRechargeOrderOnNodeService {
 
     /**
      * 确认订单是否成功
+     *
      * @param transactionOrder
      * @param verificationInfo
      * @throws Exception
      */
-    public void confirmOrder(TransactionOrder transactionOrder,TransactionVerificationInfo verificationInfo) throws Exception{
+    public void confirmOrder(TransactionOrder transactionOrder, TransactionVerificationInfo verificationInfo) throws Exception {
         if (verificationInfo != null && verificationInfo.isVerification()) {
+            logger.warn("=================GASUSED======================"+verificationInfo.getGasUsed());
             transactionOrder.setUsedGas(verificationInfo.getGasUsed());
             transactionOrder.setTradingTime(DateUtils.TimeStamp2Date(verificationInfo.getTimeStamp()));
             transactionOrder.setFee(OWalletUtils.getTransactionFee(transactionOrder.getGasPrice(), transactionOrder.getUsedGas()));
             //用户充值确认
-            if (Constants.ORDER_TYPE_USER_RECHARGE==transactionOrder.getTranscationType()) {
+            if (Constants.ORDER_TYPE_USER_RECHARGE == transactionOrder.getTranscationType()) {
                 rabbitTemplate.convertAndSend(RabbitRechargeConfig.CHECK_BALANCE, JSON.toJSONString(transactionOrder));
             }
             //gas转账确认
-            if (Constants.ORDER_TYPE_GAS_RECHARGE==transactionOrder.getTranscationType()) {
+            if (Constants.ORDER_TYPE_GAS_RECHARGE == transactionOrder.getTranscationType()) {
                 //修改转账gas订单
                 TransactionOrder oldOrder = new TransactionOrder();
                 oldOrder.setTxHash(transactionOrder.getTxHash());
@@ -129,7 +136,7 @@ public class CheckRechargeOrderOnNodeService {
                 oldOrder.setUsedGas(verificationInfo.getGasUsed());
                 oldOrder.setFee(OWalletUtils.getTransactionFee(transactionOrder.getGasPrice(), transactionOrder.getUsedGas()));
                 int i = transactionOrderMapper.updateByPrimaryKeyAndOrderStatus(oldOrder);
-                if (i > 0){
+                if (i > 0) {
 
                     rabbitTemplate.convertAndSend(RabbitRechargeConfig.RECHARGE_COIN_TO_GATHER_ACCOUNT, JSON.toJSONString(transactionOrder));
                     //记录充值邮费日志
@@ -146,19 +153,21 @@ public class CheckRechargeOrderOnNodeService {
 
             }
             //提币订单确认
-            if (Constants.ORDER_TYPE_GATHER_RECHARGE==transactionOrder.getTranscationType()) {
+            if (Constants.ORDER_TYPE_GATHER_RECHARGE == transactionOrder.getTranscationType()) {
                 rabbitTemplate.convertAndSend(RabbitRechargeConfig.AFFIRM_RECHARGE_TO_GATHER, JSON.toJSONString(transactionOrder));
             }
             //第三方平台转账
-            if (Constants.ORDER_TYPE_PLATFORM_TRANSFER==transactionOrder.getTranscationType()) {
+            if (Constants.ORDER_TYPE_PLATFORM_TRANSFER == transactionOrder.getTranscationType()) {
                 rabbitTemplate.convertAndSend(RabbitRechargeConfig.AFFIRM_PLATFORM_TRANSFER, JSON.toJSONString(transactionOrder));
             }
 
         }
     }
 
-
-
+    public static void main(String[] args) {
+        TransactionVerificationInfo verificationInfo = TransactionOnNode.verifyTransaction("0x3fd2f9785b9043ecace20562364f8ce018a84a6d50836cce1f0d21439b7ca6a6");
+        System.out.println(verificationInfo.getGasUsed());
+    }
 
 
 }

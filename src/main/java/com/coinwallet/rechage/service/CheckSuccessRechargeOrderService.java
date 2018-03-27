@@ -6,14 +6,9 @@ import com.coinwallet.common.apisecurity.AESCBC;
 import com.coinwallet.common.apisecurity.AESCBCUtil;
 import com.coinwallet.common.util.Constants;
 import com.coinwallet.common.util.HttpClient;
-import com.coinwallet.common.util.HttpRequestUtil;
-import com.coinwallet.common.util.MySSLProtocolSocketFactory;
 import com.coinwallet.rechage.dao.*;
 import com.coinwallet.rechage.entity.*;
 import com.coinwallet.rechage.rabbit.RabbitRechargeConfig;
-import org.apache.commons.httpclient.methods.PostMethod;
-import org.apache.commons.httpclient.protocol.Protocol;
-import org.apache.http.HttpEntity;
 import org.slf4j.Logger;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -202,11 +197,16 @@ public class CheckSuccessRechargeOrderService {
         Map map = new HashMap();
         map.put("in", in);
         map.put("seed", seed);
-        String rechargeSuccessUrl = merchantInfo.getRechargeSuccessUrl();
 
         HttpClient client = new HttpClient(url, "post");
         client.setEntity(map);
 
+        //记录开始回调
+        TransactionOrder order = new TransactionOrder();
+        order.setCallbackTime(new Date());
+        recordCallbacStatus(transactionOrder, order,Constants.ORDER_CALLBACK_PROCESS);
+
+        //回调
         String s = client.request(url, "utf-8");
 
         logger.warn("===============callback============" + transactionOrder.getTxHash());
@@ -218,6 +218,24 @@ public class CheckSuccessRechargeOrderService {
             s = client.request(url, "utf-8");
             jsonObject = JSON.parseObject(s);
         }
+        //回调成功修改订单状态
+        if (jsonObject.getBoolean("success")){
+            order = new TransactionOrder();
+            recordCallbacStatus(transactionOrder, order,Constants.ORDER_CALLBACK_SUCCESS);
+
+        }
+    }
+
+    /**
+     * 记录回调状态与回调时间
+     * @param transactionOrder
+     * @param order
+     * @param callbacStatus
+     */
+    private void recordCallbacStatus(TransactionOrder transactionOrder, TransactionOrder order,int callbacStatus) {
+        order.setId(transactionOrder.getId());
+        order.setCallbackStatus(callbacStatus);
+        transactionOrderMapper.updateByPrimaryKeySelective(order);
     }
 
 

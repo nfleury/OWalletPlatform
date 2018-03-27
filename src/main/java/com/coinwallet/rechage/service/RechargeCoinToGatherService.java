@@ -71,7 +71,7 @@ public class RechargeCoinToGatherService {
 
 
         Web3j web3j = Web3j.build(customNodeService);
-        BigInteger gasPrice = web3j.ethGasPrice().send().getGasPrice();
+        BigDecimal gasPrice = transactionOrder.getGasPrice();
 
 //            BigInteger nonce = web3j.ethGetTransactionCount(credentials.getAddress(), DefaultBlockParameterName.LATEST).send().getTransactionCount();
 //            BigInteger contractTransactionGasLimit = TransactionOnNode.getContractTransactionGasLimit(web3j, credentials.getAddress(), nonce, gasPrice);
@@ -79,11 +79,16 @@ public class RechargeCoinToGatherService {
         //todo 提币地址 address
         String address = getWalletAddressByTypeAndMerchantId(2, userCoinBalance.getMerchantId());//提币地址
 
-        BigDecimal gasDecimal = CommonUtils.bit18(gasPrice);
+        BigInteger gasPriceInteger = new BigInteger(gasPrice.toString().substring(0, gasPrice.toString().length() - 19));
+
+        //去除小数点及后面18位
+        BigDecimal gasDecimal = CommonUtils.bit18(gasPriceInteger);
 
         BigInteger gasLimit = transactionOrder.getCoinNum().divide(gasDecimal).toBigInteger();
 
         if (StringUtils.isNotBlank(address)) {
+
+            logger.warn("=============RECHARGE_COIN_TO_GATHER_ACCOUNT======ing========");
 
             String privateKey = AES.decrypt(userWalletInfo.getPrivatekey(), initConfig.deskey);
             Credentials credentials = Credentials.create(privateKey);
@@ -92,11 +97,14 @@ public class RechargeCoinToGatherService {
             BigDecimal userOCN = CommonUtils.bit18(new BigInteger(userWalletOCN.toString()));
 
 
-            logger.warn("============实际余额====================="+userWalletOCN);
-            logger.warn("============数据库中余额====================="+userCoinBalance.getCoinBalance());
+            if (userOCN.compareTo(new BigDecimal(coinInfo.getCoinHigherLimit().toString())) < 0) {
+                logger.warn("用户账上余额不足：" + userCoinBalance.getCoinBalance());
+                return;
+            }
+
 
             //提币到总账
-            String txHash = OWalletTransaction.doubleTransactionCoin(web3j, address, credentials.getEcKeyPair(), userOCN.toString(), gasPrice.toString(), gasLimit.toString(), coinInfo.getContractAddress(), "");
+            String txHash = OWalletTransaction.doubleTransactionCoin(web3j, address, credentials.getEcKeyPair(), userOCN.toString(), gasPriceInteger.toString(), gasLimit.toString(), coinInfo.getContractAddress(), "");
 
             UserCoinBalance coinBalance = new UserCoinBalance();
             if (txHash.equals("error")) {
@@ -109,7 +117,6 @@ public class RechargeCoinToGatherService {
                 coinBalance.setId(userCoinBalance.getId());
                 coinBalance.setTransferStatus((byte) Constants.USER_IN_TRANS);
                 userCoinBalanceMapper.updateByPrimaryKeySelective(coinBalance);
-
 
 
                 //记录提币交易订单
@@ -126,9 +133,8 @@ public class RechargeCoinToGatherService {
                 rechargeCoinOrder.setTranscationType(Constants.ORDER_TYPE_GATHER_RECHARGE);
                 transactionOrderMapper.insertSelective(rechargeCoinOrder);
 
-                logger.warn("=============RECHARGE_COIN_TO_GATHER_ACCOUNT======end========");
             }
-
+            logger.warn("=============RECHARGE_COIN_TO_GATHER_ACCOUNT======end========");
 
         }
     }
@@ -200,5 +206,6 @@ public class RechargeCoinToGatherService {
 //        String txHash = TransactionOnNode.transactionOnContract(web3j, credentials.getEcKeyPair(), "9", "0x5623629c15733d9394706c6c9dd92ded590acbf5", gasPrice.toString(), gasLimit.toString(), "", "0x4092678e4e78230f46a1534c0fbc8fa39780892b");
 //        System.out.println(txHash);
 //    }
+
 
 }

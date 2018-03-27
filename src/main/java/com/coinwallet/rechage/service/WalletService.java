@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.web3j.crypto.Credentials;
 import org.web3j.protocol.Web3j;
 
+import javax.servlet.http.HttpServletRequest;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
@@ -102,7 +103,7 @@ public class WalletService {
      * @param createWalletReq
      * @return
      */
-    public ResponseValue initWallet(CreateWalletReq createWalletReq) {
+    public ResponseValue initWallet(CreateWalletReq createWalletReq, HttpServletRequest request) {
         MerchantInfo merchantInfo = merchantInfoService.getMerchantInfoById(createWalletReq.getMerchantId());
         if (merchantInfo == null) {
             return new FailResponse(1001, "param error");
@@ -116,6 +117,9 @@ public class WalletService {
         if (decrypt == null) {
             return new FailResponse(1001, "param error");
         }
+        request.setAttribute("in",decrypt);
+        request.setAttribute("seed",createWalletReq.getSeed());
+        request.setAttribute("merchantId",merchantInfo.getId());
         JSONObject jsonObject = JSON.parseObject(decrypt);
         Integer userId = (Integer) jsonObject.get("userid");
         if (userId == null) {
@@ -139,7 +143,7 @@ public class WalletService {
      * @param transcationReq
      * @return
      */
-    public ResponseValue changeBalace(CreateWalletReq transcationReq) {
+    public ResponseValue changeBalace(CreateWalletReq transcationReq, HttpServletRequest request) {
         MerchantInfo merchantInfo = merchantInfoService.getMerchantInfoById(transcationReq.getMerchantId());
         if (merchantInfo == null) {
             return new FailResponse(1001, "param error");
@@ -153,6 +157,10 @@ public class WalletService {
         if (decrypt == null) {
             return new FailResponse(1001, "param error");
         }
+
+        request.setAttribute("in",decrypt);
+        request.setAttribute("seed",transcationReq.getSeed());
+        request.setAttribute("merchantId",merchantInfo.getId());
         JSONObject jsonObject = JSON.parseObject(decrypt);
         Integer userId = (Integer) jsonObject.get("userid");
         BigDecimal coinNum = new BigDecimal(jsonObject.get("coinNum").toString());
@@ -203,7 +211,7 @@ public class WalletService {
      * @param transferReq
      * @return
      */
-    public ResponseValue transfer(CreateWalletReq transferReq) {
+    public ResponseValue transfer(CreateWalletReq transferReq, HttpServletRequest request) {
         MerchantInfo merchantInfo = merchantInfoService.getMerchantInfoById(transferReq.getMerchantId());
         if (merchantInfo == null) {
             return new FailResponse(1001, "param error");
@@ -217,6 +225,9 @@ public class WalletService {
         if (decrypt == null) {
             return new FailResponse(1001, "param error");
         }
+        request.setAttribute("in",decrypt);
+        request.setAttribute("seed",transferReq.getSeed());
+        request.setAttribute("merchantId",merchantInfo.getId());
         JSONObject jsonObject = JSON.parseObject(decrypt);
         Integer coinId = (Integer) jsonObject.get("coinId");
         Integer orderId = (Integer) jsonObject.get("orderId");

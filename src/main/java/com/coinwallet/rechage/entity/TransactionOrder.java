@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 public class TransactionOrder {
+    private Integer id;
+
     private String txHash;
 
     private Integer orderStatus;
@@ -31,6 +33,18 @@ public class TransactionOrder {
     private BigDecimal usedGas;
 
     private Integer transcationType;
+
+    private Integer callbackStatus;
+
+    private Date callbackTime;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getTxHash() {
         return txHash;
@@ -142,5 +156,21 @@ public class TransactionOrder {
 
     public void setTranscationType(Integer transcationType) {
         this.transcationType = transcationType;
+    }
+
+    public Integer getCallbackStatus() {
+        return callbackStatus;
+    }
+
+    public void setCallbackStatus(Integer callbackStatus) {
+        this.callbackStatus = callbackStatus;
+    }
+
+    public Date getCallbackTime() {
+        return callbackTime;
+    }
+
+    public void setCallbackTime(Date callbackTime) {
+        this.callbackTime = callbackTime;
     }
 }
