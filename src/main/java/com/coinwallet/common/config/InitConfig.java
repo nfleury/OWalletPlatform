@@ -12,11 +12,6 @@ public class InitConfig {
     @Value("${aes.deskey}")
     public String deskey;
 
-    @Value("${node.main.url}")
-    public String nodeMainUrl;
-
-    @Value("${gas.name}")
-    public String gasName;
 
 
 

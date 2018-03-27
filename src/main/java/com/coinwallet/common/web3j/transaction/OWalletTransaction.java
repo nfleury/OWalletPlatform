@@ -234,7 +234,7 @@ public class OWalletTransaction {
             try {
                 return OWalletTransaction.transactionOnContract(ecKeyPair, ocnAmount, address, gas_price, gas_limit, data, contractAddress);
             } catch (Exception e1) {
-
+                logger.error(e.getMessage(),e);
                 return Constants.TRANSFER_ERROR;
             }
         }

@@ -156,7 +156,7 @@ public class TransactionOnNode {
                 return contractAddress.contains(transaction.getTo());
             }
         }).forEach(tx -> {
-            logger.warn(tx.getHash());
+//            logger.warn(tx.getHash());
             rabbitTemplate.convertAndSend(RabbitRechargeConfig.CHECK_NODE_RECHARGE, JSON.toJSONString(tx));
         });
     }
@@ -277,9 +277,15 @@ public class TransactionOnNode {
             if (transactionReceipt == null || recentBlockNumber == null) return null;
             String blockNumberRaw = transactionReceipt.getBlockNumber().toString();
             String gasUsed = transactionReceipt.getGasUsed().toString();
-            BigDecimal gasUsed_B = new BigDecimal(Hex2Decimal(gasUsed));
+
+
             if (blockNumberRaw == null) return null;
+            if (gasUsed == null) return null;
+
             BigInteger txBlockNumber = blockNumberRaw.startsWith("0x") ? Hex2Decimal(blockNumberRaw) : new BigInteger(blockNumberRaw);
+            BigDecimal gasUsed_B = gasUsed.startsWith("0x") ? new BigDecimal(Hex2Decimal(gasUsed)) : new BigDecimal(gasUsed);
+
+
             boolean isConfirm12 = OWalletUtils.verify12Block(txBlockNumber, recentBlockNumber);
             boolean statusIsSuccess = "0x1".equals(transactionReceipt.getStatus());
             EthBlock block = getBlockBuNumber(web3j, txBlockNumber);

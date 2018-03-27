@@ -8,9 +8,9 @@ import java.math.BigDecimal;
 public class Constants {
 
 
-//    public static final String BLOCK_NODE_URL = "http://h.stormfives.com:34378";
+    public static final String BLOCK_NODE_URL = "http://h.stormfives.com:34378";
 
-    public static final String BLOCK_NODE_URL = "http://172.31.1.75:34378";
+//    public static final String BLOCK_NODE_URL = "http://172.31.1.75:34378";
 
     //user_coin_log表类型
     public static final int USER_COIN_RECHARGE = 1;//用户充值
@@ -22,6 +22,10 @@ public class Constants {
     public static final int ORDER_STATUS_PEEDING = 1;//订单打包状态
     public static final int ORDER_STATUS_SUCCESS = 2;//订单成功状态
     public static final int ORDER_STATUS_FAILED = 3;//订单失败状态
+
+    public static final int ORDER_CALLBACK_PROCESS = 1;//订单开始回调
+    public static final int ORDER_CALLBACK_SUCCESS = 2;//订单回调成功
+
 
     public static final String USER_PRIVATEKEY_ERROR = "1";//用户私钥错误
     public static final String USER_LACK_OF_BALANCE= "2";//账上余额不足
